@@ -18,7 +18,7 @@ function parseVersion(version: string) {
   return version;
 }
 
-export default function App() {
+export function App() {
   const [input, setInput] = React.useState();
 
   const onChange = React.useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
