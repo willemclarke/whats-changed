@@ -1,14 +1,9 @@
 import React from 'react';
-import { z } from 'zod';
+import { Dependency, RawSchema, rawSchema } from './types';
+import { useProcessDeps } from './hooks/useProcessDeps';
+import { Button, Flex, Text, Textarea, VStack } from '@chakra-ui/react';
 
-const depSchema = z.record(z.string());
-
-const schema = z.object({
-  dependencies: depSchema,
-  devDependencies: depSchema,
-});
-
-function parseVersion(version: string) {
+function cleanVersion(version: string) {
   const chars = version.split('');
 
   if (chars[0] === '^' || chars[0] === '~') {
@@ -18,11 +13,24 @@ function parseVersion(version: string) {
   return version;
 }
 
+function toDependencies(raw: RawSchema): Dependency[] {
+  const deps = Object.entries(raw.dependencies).map(([name, version]) => {
+    return { name, version: cleanVersion(version) };
+  });
+  const devDeps = Object.entries(raw.devDependencies).map(([name, version]) => {
+    return { name, version: cleanVersion(version) };
+  });
+
+  return deps.concat(devDeps);
+}
+
 export function App() {
-  const [input, setInput] = React.useState();
+  const [input, setInput] = React.useState('');
+
+  const processDepsMutation = useProcessDeps();
 
   const onChange = React.useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInput(JSON.parse(e.target.value));
+    setInput(e.target.value);
   }, []);
 
   const onSubmit = React.useCallback(
@@ -33,45 +41,41 @@ export function App() {
         return;
       }
 
-      const unknown = schema.safeParse(input);
+      const unknown = rawSchema.safeParse(JSON.parse(input));
 
       if (!unknown.success) {
         return;
       }
 
-      const deps = Object.entries(unknown.data.dependencies).map(([name, version]) => {
-        return { name, version: parseVersion(version) };
-      });
-      const devDeps = Object.entries(unknown.data.devDependencies).map(([name, version]) => {
-        return { name, version: parseVersion(version) };
-      });
+      const dependencies = toDependencies(unknown.data);
+      setInput('');
 
-      const dependencies = [...deps, ...devDeps];
-
-      fetch('http://localhost:8080/dependencies', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dependencies),
-      })
-        .then((res) => res.json())
-        .then((res) => console.log(res));
+      return processDepsMutation.mutateAsync(dependencies);
     },
     [input]
   );
 
+  const buttonText = processDepsMutation.isLoading
+    ? 'Submitting for processing..'
+    : 'Submit for processing';
+
   return (
-    <div className="App">
-      <h1>package json changeset</h1>
-      <form onSubmit={onSubmit}>
-        <textarea
-          style={{ width: '300px', height: '500px' }}
-          onChange={onChange}
-          placeholder="paste package json here"
-        />
-        <button type="submit">Submit for processing</button>
-      </form>
-    </div>
+    <Flex height="100%" width="100%" justifyContent="center">
+      <VStack spacing={3}>
+        <Text fontSize="xl">whats-changed</Text>
+        <form onSubmit={onSubmit}>
+          <VStack spacing={2}>
+            <Textarea
+              value={input}
+              height={400}
+              width={250}
+              onChange={onChange}
+              placeholder="paste package json here"
+            />
+            <Button type="submit">{buttonText}</Button>
+          </VStack>
+        </form>
+      </VStack>
+    </Flex>
   );
 }

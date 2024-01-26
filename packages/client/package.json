@@ -8,15 +8,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
     "bun-types": "latest",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "framer-motion": "^11.0.3",
     "react-query": "^3.39.3",
     "zod": "3.22.4"
   },
   "devDependencies": {
-    "@types/react": "^17.0.33",
-    "@types/react-dom": "^17.0.10",
+    "@types/react": "18.2.25",
+    "@types/react-dom": "18.2.0",
     "@vitejs/plugin-react": "^1.0.7",
     "typescript": "^4.5.4",
     "vite": "^2.8.0"
