@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "module": "main.ts",
   "scripts": {
-    "server:dev": "bun --watch run main.ts"
+    "server:dev": "bun --watch run src/main.ts"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.5",

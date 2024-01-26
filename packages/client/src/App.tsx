@@ -26,7 +26,6 @@ function toDependencies(raw: RawSchema): Dependency[] {
 
 export function App() {
   const [input, setInput] = React.useState('');
-
   const processDepsMutation = useProcessDeps();
 
   const onChange = React.useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
