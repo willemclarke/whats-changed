@@ -1,4 +1,4 @@
-# what-changed
+# whats-changed
 
 To install dependencies:
 
