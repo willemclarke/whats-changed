@@ -48,7 +48,7 @@ export function App() {
       }
 
       const dependencies = toDependencies(unknown.data);
-      setInput('');
+      // setInput('');
 
       return processDepsMutation.mutateAsync(dependencies);
     },
