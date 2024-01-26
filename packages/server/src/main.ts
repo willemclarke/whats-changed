@@ -2,9 +2,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
 import { z } from 'zod';
-import { getRepositoryInfo } from './utils';
-
-const dependencySchema = z.object({ name: z.string(), version: z.string() });
+import { dependencySchema, getReleaseNotes, getReleases, getRepositoryInfo } from './utils';
 
 const app = express();
 const port = process.env.PORT ?? 8080;
@@ -19,7 +17,7 @@ app.post('/dependencies', async (req, res) => {
     return res.json(400).json('Unable to parse provided body');
   }
 
-  const repo = await getRepositoryInfo(unknown.data[0]?.name);
+  const repo = await getReleases(unknown.data);
   console.log(repo);
 
   res.status(200).json(unknown.data);
