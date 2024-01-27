@@ -18,6 +18,15 @@
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
+
+    // TODO: make it @whats-changed/common
+    "baseUrl": "./",
+    "paths": {
+      "@client/*": ["client/*"],
+      "@common/*": ["common/*"],
+      "@server/*": ["server/*"]
+    },
+
     "types": [
       "bun-types" // add Bun global
     ]

@@ -1,5 +1,5 @@
+import { Dependency } from 'common/src/types';
 import { useMutation } from 'react-query';
-import { Dependency } from '../types';
 
 function postDependencies(dependencies: Dependency[]) {
   return fetch('http://localhost:8080/dependencies', {
