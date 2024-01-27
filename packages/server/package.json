@@ -1,22 +1,19 @@
 {
   "name": "server",
-  "private": true,
   "version": "0.0.0",
+  "type": "module",
   "module": "main.ts",
   "scripts": {
     "server:dev": "bun --watch run src/main.ts"
   },
   "devDependencies": {
+    "common": "workspace:*",
     "@types/body-parser": "^1.19.5",
     "@types/bun": "latest",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21"
   },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
   "dependencies": {
-    "common": "workspace:*",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
