@@ -19,6 +19,11 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
 
+    "baseUrl": "./",
+    "paths": {
+      "@common/*": ["./src/*"]
+    },
+
     "types": [
       "bun-types" // add Bun global
     ]
