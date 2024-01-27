@@ -1,7 +1,8 @@
 import React from 'react';
-import { Dependency, RawSchema, rawSchema } from './types';
+import { RawSchema, rawSchema } from './types';
 import { useProcessDeps } from './hooks/useProcessDeps';
 import { Button, Flex, Text, Textarea, VStack } from '@chakra-ui/react';
+import { Dependency } from 'common/src/types';
 
 function cleanVersion(version: string) {
   const chars = version.split('');

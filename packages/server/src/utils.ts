@@ -1,8 +1,5 @@
 import { z } from 'zod';
-
-export const dependencySchema = z.object({ name: z.string(), version: z.string() });
-
-export type Dependency = z.infer<typeof dependencySchema>;
+import type { Dependency } from '../../common/src/types';
 
 type Repository = {
   owner: string;

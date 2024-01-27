@@ -2,7 +2,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
 import { z } from 'zod';
-import { dependencySchema, getReleaseNotes, getReleases, getRepositoryInfo } from './utils';
+import { getReleases } from './utils';
+import { dependencySchema } from '../../common/src/types';
 
 const app = express();
 const port = process.env.PORT ?? 8080;

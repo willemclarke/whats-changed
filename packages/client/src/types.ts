@@ -9,8 +9,3 @@ export const rawSchema = z.object({
 });
 
 export type RawSchema = z.infer<typeof rawSchema>;
-
-// -- what we send/ recieve back from API
-const dependencySchema = z.object({ name: z.string(), version: z.string() });
-
-export type Dependency = z.infer<typeof dependencySchema>;
