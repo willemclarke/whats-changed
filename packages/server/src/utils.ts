@@ -1,9 +1,12 @@
+import semver from 'semver';
 import { z } from 'zod';
 import type { Dependency } from '../../common/src/types';
+import { cockhubClient } from './github-client';
 
 type Repository = {
   owner: string;
   name: string;
+  version: string;
 };
 
 const repositorySchema = z.object({
@@ -14,6 +17,36 @@ const repositorySchema = z.object({
 const npmSchema = z.object({
   repository: repositorySchema,
 });
+
+const releaseNotesSchema = z.array(
+  z.object({
+    tag_name: z.string(),
+    name: z.string().nullish(),
+    body: z.string(),
+    created_at: z.string(),
+  })
+);
+
+type ReleaseNotes = z.infer<typeof releaseNotesSchema>;
+type ReleaseNote = ReleaseNotes[number];
+
+const parseVersion = (version: string) => {
+  const coerced = semver.coerce(version);
+
+  if (!coerced) {
+    throw new Error('Invalid version format');
+  }
+
+  return coerced.version;
+};
+
+const getNewerReleases = (currentVersion: string, releases: ReleaseNotes) => {
+  return releases.filter((release) => {
+    const releaseVersion = parseVersion(release.tag_name);
+    const isNewer = semver.compare(releaseVersion, currentVersion) === 1;
+    return isNewer;
+  });
+};
 
 export async function getRepositoryInfo(dependency: Dependency): Promise<Repository> {
   const res = await fetch(`https://registry.npmjs.org/${dependency.name}`);
@@ -26,26 +59,49 @@ export async function getRepositoryInfo(dependency: Dependency): Promise<Reposit
   }
 
   const splitUrl = parsed.data.repository.url.split('/');
-  return { owner: splitUrl[3], name: splitUrl[4].split('.')[0] };
+  return { owner: splitUrl[3], name: splitUrl[4].split('.')[0], version: dependency.version };
 }
 
-// TODO: need to parse
-export async function getReleaseNotes(repository: Repository) {
-  const res = await fetch(
-    `https://api.github.com/repos/${repository.owner}/${repository.name}/releases`,
+export async function getReleaseNotes(repository: Repository): Promise<ReleaseNotes> {
+  const data = await cockhubClient.paginate<ReleaseNote>(
+    `/repos/${repository.owner}/${repository.name}/releases?per_page=100`,
     {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
+      stopPredicate: (release) => {
+        const isOlder =
+          semver.compare(parseVersion(release.tag_name), parseVersion(repository.version)) === -1;
+
+        if (isOlder) {
+          console.log(
+            'stopped paginating, older version detected in resp:',
+            `'${release.tag_name}'`,
+            'is older than provided version',
+            `'${repository.version}'`
+          );
+        }
+
+        return isOlder;
       },
     }
   );
-  const data = await res.json();
-  return data;
+
+  const parsed = releaseNotesSchema.safeParse(data);
+
+  if (!parsed.success) {
+    console.error('parsedError:', parsed.error);
+    throw new Error('Unable to parse into zod schema');
+  }
+
+  const currentVersion = parseVersion(repository.version);
+  const newerReleases = getNewerReleases(currentVersion, parsed.data);
+
+  return newerReleases;
 }
 
 export async function getReleases(dependencies: Dependency[]) {
-  const repositories = await Promise.all(dependencies.slice(2).map(getRepositoryInfo));
+  const dep = dependencies[7];
+  console.log({ dep });
+  const repositories = await Promise.all([dep].map(getRepositoryInfo));
   const releases = await Promise.all(repositories.map(getReleaseNotes));
+
   return releases;
 }

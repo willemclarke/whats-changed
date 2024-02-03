@@ -18,10 +18,10 @@ app.post('/dependencies', async (req, res) => {
     return res.json(400).json('Unable to parse provided body');
   }
 
-  const repo = await getReleases(unknown.data);
-  console.log(repo);
+  const releases = await getReleases(unknown.data);
+  console.log({ releases });
 
-  res.status(200).json(unknown.data);
+  res.status(200).json(releases);
 });
 
 app.listen(port, async () => {
