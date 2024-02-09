@@ -60,4 +60,4 @@ export class GithubClient {
   }
 }
 
-export const cockhubClient = new GithubClient();
+export const githubClient = new GithubClient();

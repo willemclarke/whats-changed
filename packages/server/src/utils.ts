@@ -1,7 +1,7 @@
 import semver from 'semver';
 import { z } from 'zod';
 import type { Dependency } from '../../common/src/types';
-import { cockhubClient } from './github-client';
+import { githubClient } from './github-client';
 
 type Repository = {
   owner: string;
@@ -63,7 +63,7 @@ export async function getRepositoryInfo(dependency: Dependency): Promise<Reposit
 }
 
 export async function getReleaseNotes(repository: Repository): Promise<ReleaseNotes> {
-  const data = await cockhubClient.paginate<ReleaseNote>(
+  const data = await githubClient.paginate<ReleaseNote>(
     `/repos/${repository.owner}/${repository.name}/releases?per_page=100`,
     {
       stopPredicate: (release) => {
