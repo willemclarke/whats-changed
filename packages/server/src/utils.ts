@@ -1,6 +1,7 @@
 import semver from 'semver';
 import { z } from 'zod';
 import type { Dependency } from '../../common/src/types';
+import { R } from '../../common/src/index';
 import { githubClient } from './github-client';
 
 type Repository = {
@@ -18,17 +19,17 @@ const npmSchema = z.object({
   repository: repositorySchema,
 });
 
-const releaseNotesSchema = z.array(
-  z.object({
-    tag_name: z.string(),
-    name: z.string().nullish(),
-    body: z.string(),
-    created_at: z.string(),
-  })
-);
+const releaseNoteSchema = z.object({
+  tag_name: z.string(),
+  name: z.string().nullable(),
+  body: z.string().nullable(),
+  created_at: z.string(),
+  html_url: z.string(),
+});
 
-type ReleaseNotes = z.infer<typeof releaseNotesSchema>;
-type ReleaseNote = ReleaseNotes[number];
+const releaseNotesSchema = z.array(releaseNoteSchema);
+
+type ReleaseNote = z.infer<typeof releaseNoteSchema>;
 
 const parseVersion = (version: string) => {
   const coerced = semver.coerce(version);
@@ -40,7 +41,7 @@ const parseVersion = (version: string) => {
   return coerced.version;
 };
 
-const getNewerReleases = (currentVersion: string, releases: ReleaseNotes) => {
+const getNewerReleases = (currentVersion: string, releases: ReleaseNote[]) => {
   return releases.filter((release) => {
     const releaseVersion = parseVersion(release.tag_name);
     const isNewer = semver.compare(releaseVersion, currentVersion) === 1;
@@ -62,7 +63,7 @@ export async function getRepositoryInfo(dependency: Dependency): Promise<Reposit
   return { owner: splitUrl[3], name: splitUrl[4].split('.')[0], version: dependency.version };
 }
 
-export async function getReleaseNotes(repository: Repository): Promise<ReleaseNotes> {
+export async function getReleaseNotes(repository: Repository) {
   const data = await githubClient.paginate<ReleaseNote>(
     `/repos/${repository.owner}/${repository.name}/releases?per_page=100`,
     {
@@ -84,24 +85,30 @@ export async function getReleaseNotes(repository: Repository): Promise<ReleaseNo
     }
   );
 
-  const parsed = releaseNotesSchema.safeParse(data);
+  const parsedReleases = releaseNotesSchema.safeParse(data);
 
-  if (!parsed.success) {
-    console.error('parsedError:', parsed.error);
+  if (!parsedReleases.success) {
+    console.error('parsedError:', parsedReleases.error);
     throw new Error('Unable to parse into zod schema');
   }
 
   const currentVersion = parseVersion(repository.version);
-  const newerReleases = getNewerReleases(currentVersion, parsed.data);
+  const newerReleases = getNewerReleases(currentVersion, parsedReleases.data);
 
-  return newerReleases;
+  return newerReleases.map((release) => {
+    return {
+      ...release,
+      dependencyName: repository.name.toLowerCase(),
+    };
+  });
 }
 
 export async function getReleases(dependencies: Dependency[]) {
-  const dep = dependencies[7];
-  console.log({ dep });
-  const repositories = await Promise.all([dep].map(getRepositoryInfo));
+  const deps = dependencies.slice(0, 2);
+
+  const repositories = await Promise.all(deps.map(getRepositoryInfo));
   const releases = await Promise.all(repositories.map(getReleaseNotes));
 
-  return releases;
+  const grouped = R.groupBy(releases.flat(), (dep) => dep.dependencyName);
+  return grouped;
 }

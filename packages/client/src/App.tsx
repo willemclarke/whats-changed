@@ -14,11 +14,32 @@ function cleanVersion(version: string) {
   return version;
 }
 
+const isUnsupportedVersion = (version: string): boolean => {
+  switch (version) {
+    case 'latest':
+    case 'workspace:*': {
+      return true;
+    }
+    default: {
+      return false;
+    }
+  }
+};
+
 function toDependencies(raw: RawSchema): Dependency[] {
-  const deps = Object.entries(raw.dependencies).map(([name, version]) => {
+  const deps = Object.entries(raw.dependencies).flatMap(([name, version]) => {
+    if (isUnsupportedVersion(version)) {
+      return [];
+    }
+
     return { name, version: cleanVersion(version) };
   });
-  const devDeps = Object.entries(raw.devDependencies).map(([name, version]) => {
+
+  const devDeps = Object.entries(raw.devDependencies).flatMap(([name, version]) => {
+    if (isUnsupportedVersion(version)) {
+      return [];
+    }
+
     return { name, version: cleanVersion(version) };
   });
 
@@ -48,7 +69,6 @@ export function App() {
       }
 
       const dependencies = toDependencies(unknown.data);
-      // setInput('');
 
       return processDepsMutation.mutateAsync(dependencies);
     },

@@ -20,7 +20,6 @@ export class GithubClient {
       });
 
       const data = (await res.json()) as A;
-
       return { data, res };
     };
   }
@@ -30,6 +29,10 @@ export class GithubClient {
     const allData = [] as A[];
 
     const { data, res } = await this.get<A[]>(url);
+
+    if (!res.ok) {
+      return [];
+    }
 
     allData.push(...data);
 
