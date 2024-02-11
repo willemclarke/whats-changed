@@ -1,6 +1,6 @@
 import semver from 'semver';
 import { z } from 'zod';
-import type { Dependency } from '../../common/src/types';
+import type { Dependency, Release } from '../../common/src/types';
 import { R } from '../../common/src/index';
 import { githubClient } from './github-client';
 
@@ -29,7 +29,7 @@ const releaseNoteSchema = z.object({
 
 const releaseNotesSchema = z.array(releaseNoteSchema);
 
-type ReleaseNote = z.infer<typeof releaseNoteSchema>;
+type ReleaseNoteRaw = z.infer<typeof releaseNoteSchema>;
 
 const parseVersion = (version: string) => {
   const coerced = semver.coerce(version);
@@ -41,7 +41,7 @@ const parseVersion = (version: string) => {
   return coerced.version;
 };
 
-const getNewerReleases = (currentVersion: string, releases: ReleaseNote[]) => {
+const getNewerReleases = (currentVersion: string, releases: ReleaseNoteRaw[]) => {
   return releases.filter((release) => {
     const releaseVersion = parseVersion(release.tag_name);
     const isNewer = semver.compare(releaseVersion, currentVersion) === 1;
@@ -63,8 +63,8 @@ export async function getRepositoryInfo(dependency: Dependency): Promise<Reposit
   return { owner: splitUrl[3], name: splitUrl[4].split('.')[0], version: dependency.version };
 }
 
-export async function getReleaseNotes(repository: Repository) {
-  const data = await githubClient.paginate<ReleaseNote>(
+export async function getReleaseNotes(repository: Repository): Promise<Release[]> {
+  const data = await githubClient.paginate<ReleaseNoteRaw>(
     `/repos/${repository.owner}/${repository.name}/releases?per_page=100`,
     {
       stopPredicate: (release) => {
@@ -95,20 +95,38 @@ export async function getReleaseNotes(repository: Repository) {
   const currentVersion = parseVersion(repository.version);
   const newerReleases = getNewerReleases(currentVersion, parsedReleases.data);
 
+  const name = repository.name.toLowerCase();
+
+  if (R.isEmpty(newerReleases)) {
+    return [
+      {
+        kind: 'withoutReleaseNote',
+        dependencyName: name,
+      },
+    ];
+  }
+
   return newerReleases.map((release) => {
     return {
-      ...release,
-      dependencyName: repository.name.toLowerCase(),
+      kind: 'withReleaseNote',
+      dependencyName: name,
+      createdAt: release.created_at,
+      tagName: release.tag_name,
+      url: release.html_url,
+      body: release.body,
+      name: release.name,
     };
   });
 }
 
-export async function getReleases(dependencies: Dependency[]) {
-  const deps = dependencies.slice(0, 2);
+export async function getReleases(dependencies: Dependency[]): Promise<Record<string, Release[]>> {
+  const deps = dependencies;
 
   const repositories = await Promise.all(deps.map(getRepositoryInfo));
   const releases = await Promise.all(repositories.map(getReleaseNotes));
+  const flattenedReleases = releases.flat();
 
-  const grouped = R.groupBy(releases.flat(), (dep) => dep.dependencyName);
-  return grouped;
+  const groupedReleases = R.groupBy(flattenedReleases, (dep) => dep.dependencyName);
+
+  return groupedReleases;
 }
