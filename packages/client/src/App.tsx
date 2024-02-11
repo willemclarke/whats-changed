@@ -26,24 +26,14 @@ const isUnsupportedVersion = (version: string): boolean => {
   }
 };
 
-function toDependencies(raw: RawSchema): Dependency[] {
-  const deps = Object.entries(raw.dependencies).flatMap(([name, version]) => {
+function toDependencies(rawDependencies: RawSchema): Dependency[] {
+  return rawDependencies.flatMap(([name, version]) => {
     if (isUnsupportedVersion(version)) {
       return [];
     }
 
     return { name, version: cleanVersion(version) };
   });
-
-  const devDeps = Object.entries(raw.devDependencies).flatMap(([name, version]) => {
-    if (isUnsupportedVersion(version)) {
-      return [];
-    }
-
-    return { name, version: cleanVersion(version) };
-  });
-
-  return deps.concat(devDeps);
 }
 
 export function App() {
