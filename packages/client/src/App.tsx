@@ -65,10 +65,6 @@ export function App() {
     [input]
   );
 
-  const buttonText = processDepsMutation.isLoading
-    ? 'Submitting for processing..'
-    : 'Submit for processing';
-
   return (
     <Flex height="100%" width="100%" justifyContent="center">
       <VStack spacing={3}>
@@ -82,7 +78,13 @@ export function App() {
               onChange={onChange}
               placeholder="paste package json here"
             />
-            <Button type="submit">{buttonText}</Button>
+            <Button
+              type="submit"
+              isLoading={processDepsMutation.isLoading}
+              loadingText="Processing dependencies"
+            >
+              Submit for processing
+            </Button>
           </VStack>
         </form>
       </VStack>

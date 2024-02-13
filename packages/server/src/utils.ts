@@ -1,6 +1,6 @@
 import semver from 'semver';
 import { z } from 'zod';
-import type { Dependency, Release } from '../../common/src/types';
+import type { Dependency, Release, Releases } from '../../common/src/types';
 import { R } from '../../common/src/index';
 import { githubClient } from './github-client';
 
@@ -119,14 +119,11 @@ export async function getReleaseNotes(repository: Repository): Promise<Release[]
   });
 }
 
-export async function getReleases(dependencies: Dependency[]): Promise<Record<string, Release[]>> {
-  const deps = dependencies;
-
-  const repositories = await Promise.all(deps.map(getRepositoryInfo));
+export async function getReleases(dependencies: Dependency[]): Promise<Releases> {
+  const repositories = await Promise.all(dependencies.map(getRepositoryInfo));
   const releases = await Promise.all(repositories.map(getReleaseNotes));
   const flattenedReleases = releases.flat();
 
   const groupedReleases = R.groupBy(flattenedReleases, (dep) => dep.dependencyName);
-
   return groupedReleases;
 }

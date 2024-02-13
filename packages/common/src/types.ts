@@ -1,24 +1,35 @@
 import { z } from 'zod';
 
-// -- what we send from front-end to back-end
+// what we initially send from front-end to back-end
 export const dependencySchema = z.object({ name: z.string(), version: z.string() });
 
 export type Dependency = z.infer<typeof dependencySchema>;
 
-// -- what we send back to client from server
-type WithReleaseNote = {
-  kind: 'withReleaseNote';
-  dependencyName: string;
-  tagName: string;
-  url: string;
-  name: string | null;
-  body: string | null;
-  createdAt: string;
-};
+// Releases type is generated from the backend and sent
+// to the client
+const withReleaseNote = z.object({
+  kind: z.literal('withReleaseNote'),
+  dependencyName: z.string(),
+  tagName: z.string(),
+  url: z.string(),
+  name: z.string().nullable(),
+  body: z.string().nullable(),
+  createdAt: z.string(),
+});
 
-type WithoutReleaseNote = {
-  kind: 'withoutReleaseNote';
-  dependencyName: string;
-};
+const withoutReleaseNote = z.object({
+  kind: z.literal('withoutReleaseNote'),
+  dependencyName: z.string(),
+});
+
+const releaseUnion = z.discriminatedUnion('kind', [withReleaseNote, withoutReleaseNote]);
+
+export const releasesSchema = z.record(z.string(), z.array(releaseUnion));
+
+type WithReleaseNote = z.infer<typeof withReleaseNote>;
+
+type WithoutReleaseNote = z.infer<typeof withoutReleaseNote>;
 
 export type Release = WithReleaseNote | WithoutReleaseNote;
+
+export type Releases = Record<string, Release[]>;
