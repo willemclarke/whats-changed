@@ -1,8 +1,26 @@
 import React from 'react';
 import { RawSchema, rawSchema } from './types';
 import { useProcessDeps } from './hooks/useProcessDeps';
-import { Button, Flex, Text, Textarea, VStack } from '@chakra-ui/react';
-import { Dependency } from 'common/src/types';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Link,
+  Tag,
+  Text,
+  Textarea,
+  VStack,
+} from '@chakra-ui/react';
+import { Dependency, Releases } from 'common/src/types';
+import { useLocalStorage } from './hooks/useLocalStroage';
+import { useToast } from './hooks/useToast';
+import { R } from '../../common/src/index';
 
 function cleanVersion(version: string) {
   const chars = version.split('');
@@ -37,7 +55,10 @@ function toDependencies(rawDependencies: RawSchema): Dependency[] {
 }
 
 export function App() {
-  const [input, setInput] = React.useState('');
+  const [input, setInput] = useLocalStorage<string | undefined>('input', '');
+  const [releases, setReleases] = useLocalStorage<Releases | null>('releases', null);
+
+  const toasts = useToast();
   const processDepsMutation = useProcessDeps();
 
   const onChange = React.useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -48,7 +69,7 @@ export function App() {
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      if (!input) {
+      if (R.isEmpty(input)) {
         return;
       }
 
@@ -60,34 +81,83 @@ export function App() {
 
       const dependencies = toDependencies(unknown.data);
 
-      return processDepsMutation.mutateAsync(dependencies);
+      return processDepsMutation
+        .mutateAsync(dependencies)
+        .then((releases) => setReleases(releases))
+        .catch((error) => {
+          if (error instanceof Error) {
+            toasts.errorToast(error.message);
+          } else {
+            toasts.errorToast('Unknown error occurred');
+          }
+        });
     },
     [input]
   );
 
   return (
     <Flex height="100%" width="100%" justifyContent="center">
-      <VStack spacing={3}>
-        <Text fontSize="xl">whats-changed</Text>
-        <form onSubmit={onSubmit}>
-          <VStack spacing={2}>
-            <Textarea
-              value={input}
-              height={400}
-              width={250}
-              onChange={onChange}
-              placeholder="paste package json here"
-            />
-            <Button
-              type="submit"
-              isLoading={processDepsMutation.isLoading}
-              loadingText="Processing dependencies"
-            >
-              Submit for processing
-            </Button>
-          </VStack>
-        </form>
-      </VStack>
+      <HStack spacing={2}>
+        <VStack spacing={3}>
+          <Text fontSize="2xl">whats-changed</Text>
+          <form onSubmit={onSubmit}>
+            <VStack spacing={2}>
+              <Textarea
+                value={input}
+                height={400}
+                width={250}
+                onChange={onChange}
+                placeholder="paste package json here"
+              />
+              <Button
+                type="submit"
+                isLoading={processDepsMutation.isLoading}
+                loadingText="Processing dependencies"
+              >
+                Submit for processing
+              </Button>
+            </VStack>
+          </form>
+        </VStack>
+        <VStack>
+          {Object.entries(releases ?? {}).map(([dependency, releases]) => {
+            const hasReleases = R.first(releases)?.kind === 'withReleaseNote';
+
+            return (
+              <Accordion allowToggle width={500}>
+                <AccordionItem>
+                  <h2>
+                    <AccordionButton>
+                      <Box as="span" flex="1" textAlign="left">
+                        {dependency}
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </h2>
+                  {hasReleases && (
+                    <AccordionPanel pb={4} height={500} overflowY="scroll">
+                      <VStack spacing={2}>
+                        {releases.map((release) => {
+                          if (release.kind === 'withReleaseNote') {
+                            return (
+                              <HStack spacing={2}>
+                                <Tag>{release.tagName}</Tag>
+                                <Link href={release.url}>{release.url}</Link>
+                              </HStack>
+                            );
+                          }
+
+                          return null;
+                        })}
+                      </VStack>
+                    </AccordionPanel>
+                  )}
+                </AccordionItem>
+              </Accordion>
+            );
+          })}
+        </VStack>
+      </HStack>
     </Flex>
   );
 }
