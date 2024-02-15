@@ -12,15 +12,16 @@ import {
   Flex,
   HStack,
   Link,
+  Spinner,
   Tag,
   Text,
   Textarea,
   VStack,
 } from '@chakra-ui/react';
-import { Dependency, Releases } from 'common/src/types';
-import { useLocalStorage } from './hooks/useLocalStroage';
+import { Dependency } from 'common/src/types';
 import { useToast } from './hooks/useToast';
 import { R } from '../../common/src/index';
+import * as indexedDb from './indexedDb';
 
 function cleanVersion(version: string) {
   const chars = version.split('');
@@ -55,8 +56,8 @@ function toDependencies(rawDependencies: RawSchema): Dependency[] {
 }
 
 export function App() {
-  const [input, setInput] = useLocalStorage<string | undefined>('input', '');
-  const [releases, setReleases] = useLocalStorage<Releases | null>('releases', null);
+  const [input, setInput] = React.useState('');
+  const releasesQuery = indexedDb.useGetReleasesQuery();
 
   const toasts = useToast();
   const processDepsMutation = useProcessDeps();
@@ -81,16 +82,19 @@ export function App() {
 
       const dependencies = toDependencies(unknown.data);
 
-      return processDepsMutation
-        .mutateAsync(dependencies)
-        .then((releases) => setReleases(releases))
-        .catch((error) => {
+      return processDepsMutation.mutateAsync(dependencies, {
+        onSuccess: async (releases) => {
+          await indexedDb.setReleases(releases);
+          releasesQuery.refetch();
+        },
+        onError: (error) => {
           if (error instanceof Error) {
             toasts.errorToast(error.message);
           } else {
             toasts.errorToast('Unknown error occurred');
           }
-        });
+        },
+      });
     },
     [input]
   );
@@ -120,42 +124,46 @@ export function App() {
           </form>
         </VStack>
         <VStack>
-          {Object.entries(releases ?? {}).map(([dependency, releases]) => {
-            const hasReleases = R.first(releases)?.kind === 'withReleaseNote';
+          {releasesQuery.isLoading || !releasesQuery.data ? (
+            <Spinner />
+          ) : (
+            Object.entries(releasesQuery.data).map(([dependency, releases]) => {
+              const hasReleases = R.first(releases)?.kind === 'withReleaseNote';
 
-            return (
-              <Accordion allowToggle width={500}>
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box as="span" flex="1" textAlign="left">
-                        {dependency}
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  {hasReleases && (
-                    <AccordionPanel pb={4} height={500} overflowY="scroll">
-                      <VStack spacing={2}>
-                        {releases.map((release) => {
-                          if (release.kind === 'withReleaseNote') {
-                            return (
-                              <HStack spacing={2}>
-                                <Tag>{release.tagName}</Tag>
-                                <Link href={release.url}>{release.url}</Link>
-                              </HStack>
-                            );
-                          }
+              return (
+                <Accordion allowToggle width={500} key={dependency}>
+                  <AccordionItem>
+                    <h2>
+                      <AccordionButton>
+                        <Box as="span" flex="1" textAlign="left">
+                          {dependency}
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                    </h2>
+                    {hasReleases && (
+                      <AccordionPanel pb={4} height={500} overflowY="scroll">
+                        <VStack spacing={2}>
+                          {releases.map((release) => {
+                            if (release.kind === 'withReleaseNote') {
+                              return (
+                                <HStack spacing={2} key={release.tagName}>
+                                  <Tag>{release.tagName}</Tag>
+                                  <Link href={release.url}>{release.url}</Link>
+                                </HStack>
+                              );
+                            }
 
-                          return null;
-                        })}
-                      </VStack>
-                    </AccordionPanel>
-                  )}
-                </AccordionItem>
-              </Accordion>
-            );
-          })}
+                            return null;
+                          })}
+                        </VStack>
+                      </AccordionPanel>
+                    )}
+                  </AccordionItem>
+                </Accordion>
+              );
+            })
+          )}
         </VStack>
       </HStack>
     </Flex>

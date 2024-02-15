@@ -10,12 +10,13 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.0.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "bun-types": "latest",
     "framer-motion": "^11.0.3",
+    "idb": "^8.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-query": "^3.39.3",
     "zod": "3.22.4"
   },
