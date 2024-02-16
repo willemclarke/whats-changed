@@ -18,12 +18,25 @@ export function useToast() {
   );
 
   const errorToast = React.useCallback(
-    (title: string) => {
+    (title: string, duration?: number) => {
       toast({
         title,
         status: 'error',
         isClosable: true,
-        duration: 3000,
+        duration: duration ?? 3000,
+        position: 'bottom',
+      });
+    },
+    [toast]
+  );
+
+  const infoToast = React.useCallback(
+    (title: string, duration?: number) => {
+      toast({
+        title,
+        status: 'info',
+        isClosable: true,
+        duration: duration ?? 3000,
         position: 'bottom',
       });
     },
@@ -34,5 +47,6 @@ export function useToast() {
     toast,
     successToast,
     errorToast,
+    infoToast,
   };
 }
