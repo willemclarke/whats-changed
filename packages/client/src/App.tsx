@@ -83,7 +83,7 @@ export function App() {
       </Text>
       <Flex width="100%" my={4} justifyContent="center">
         <HStack spacing={2}>
-          <VStack spacing={3}>
+          <VStack spacing={3} h="100%" alignItems="start">
             <form onSubmit={onSubmit}>
               <VStack spacing={2}>
                 <Textarea
@@ -103,7 +103,7 @@ export function App() {
               </VStack>
             </form>
           </VStack>
-          <VStack>
+          <VStack spacing={2} h="100%" alignItems={'start'}>
             {releasesQuery.isLoading || !releasesQuery.data ? (
               <Spinner />
             ) : (
