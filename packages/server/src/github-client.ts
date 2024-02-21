@@ -1,4 +1,5 @@
 import parseLinkHeader from 'parse-link-header';
+import { z } from 'zod';
 
 type HTTPMethod = 'GET' | 'POST';
 
@@ -9,7 +10,11 @@ export class GithubClient {
   public post = this.createMethod('POST');
 
   private createMethod(method: HTTPMethod) {
-    return async function <A = unknown>(url: string, options?: RequestInit) {
+    return async function <A = unknown>(
+      url: string,
+      schema: z.ZodSchema<A>,
+      options?: RequestInit
+    ): Promise<{ data: A; res: Response }> {
       const res = await fetch(GITHUB_BASE_URL + url, {
         method,
         ...options,
@@ -19,16 +24,30 @@ export class GithubClient {
         },
       });
 
-      const data = (await res.json()) as A;
-      return { data, res };
+      if (!res.ok) {
+        throw new Error('Error fetching');
+      }
+
+      const data = await res.json();
+      const parsed = schema.safeParse(data);
+
+      if (!parsed.success) {
+        throw new Error('Failed to parse into provided schema');
+      }
+
+      return { data: parsed.data, res };
     };
   }
 
-  public async paginate<A>(url: string, options?: { stopPredicate?: (data: A) => boolean }) {
+  public async paginate<A>(
+    url: string,
+    schema: z.ZodSchema<A[]>,
+    options?: { stopPredicate?: (data: A) => boolean }
+  ) {
     const { stopPredicate } = options ?? {};
     const allData = [] as A[];
 
-    const { data, res } = await this.get<A[]>(url);
+    const { data, res } = await this.get(url, schema);
 
     if (!res.ok) {
       return [];
@@ -52,7 +71,7 @@ export class GithubClient {
 
     const { next } = paginationLinks;
     if (next) {
-      const nextData = await this.paginate<A>(next.url.split(GITHUB_BASE_URL)[1], {
+      const nextData = await this.paginate<A>(next.url.split(GITHUB_BASE_URL)[1], schema, {
         stopPredicate,
       });
 

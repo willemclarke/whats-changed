@@ -64,8 +64,9 @@ export async function getRepositoryInfo(dependency: Dependency): Promise<Reposit
 }
 
 export async function getReleaseNotes(repository: Repository): Promise<Release[]> {
-  const data = await githubClient.paginate<ReleaseNoteRaw>(
+  const releases = await githubClient.paginate<ReleaseNoteRaw>(
     `/repos/${repository.owner}/${repository.name}/releases?per_page=100`,
+    releaseNotesSchema,
     {
       stopPredicate: (release) => {
         const isOlder =
@@ -85,15 +86,8 @@ export async function getReleaseNotes(repository: Repository): Promise<Release[]
     }
   );
 
-  const parsedReleases = releaseNotesSchema.safeParse(data);
-
-  if (!parsedReleases.success) {
-    console.error('parsedError:', parsedReleases.error);
-    throw new Error('Unable to parse into zod schema');
-  }
-
   const currentVersion = parseVersion(repository.version);
-  const newerReleases = getNewerReleases(currentVersion, parsedReleases.data);
+  const newerReleases = getNewerReleases(currentVersion, releases);
 
   const name = repository.name.toLowerCase();
 
