@@ -63,6 +63,36 @@ const getNewerReleases = (currentVersion: string, releases: ReleaseNoteRaw[]) =>
   });
 };
 
+export async function getAllReleaseNotes(repository: Repository): Promise<Release[]> {
+  const releases = await githubClient.paginate<ReleaseNoteRaw>(
+    `/repos/${repository.owner}/${repository.name}/releases?per_page=100`,
+    releaseNotesSchema
+  );
+
+  const name = repository.name.toLowerCase();
+
+  if (R.isEmpty(releases)) {
+    return [
+      {
+        kind: 'withoutReleaseNote',
+        dependencyName: name,
+      },
+    ];
+  }
+
+  return releases.map((release) => {
+    return {
+      kind: 'withReleaseNote',
+      dependencyName: name,
+      createdAt: release.created_at,
+      tagName: release.tag_name,
+      url: release.html_url,
+      body: release.body,
+      name: release.name,
+    };
+  });
+}
+
 export async function getReleaseNotes(repository: Repository): Promise<Release[]> {
   const releases = await githubClient.paginate<ReleaseNoteRaw>(
     `/repos/${repository.owner}/${repository.name}/releases?per_page=100`,

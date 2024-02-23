@@ -18,7 +18,7 @@ const npmResponse = z.object({
   objects: z.array(z.object({ package: packageSchema })),
 });
 
-type Package = z.infer<typeof packageSchema>;
+export type Package = z.infer<typeof packageSchema>;
 
 const url = (offset: number) =>
   `https://registry.npmjs.com/-/v1/search?size=250&popularity=1.0&quality=0.0&maintenance=0.0&text=boost-exact:false&from=${offset}`;

@@ -26,3 +26,5 @@ export const map = async <A, B>(
 
   return Promise.all(results);
 };
+
+export const async = { map };
