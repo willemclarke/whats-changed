@@ -17,7 +17,8 @@ export function createDb() {
     name TEXT NOT NULL,
     tag_name TEXT NOT NULL,
     release_url TEXT NOT NULL,
-    created DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+    created DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    UNIQUE (name, tag_name)
 );
 `);
 }

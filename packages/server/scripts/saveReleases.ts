@@ -33,7 +33,10 @@ async function run() {
       ) as WithReleaseNote[];
 
       const insert = db.prepare(
-        'INSERT INTO releases (id, name, tag_name, release_url) VALUES ($id, $name, $tag_name, $release_url)'
+        `INSERT INTO releases (id, name, tag_name, release_url) 
+         VALUES ($id, $name, $tag_name, $release_url)
+         ON CONFLICT (name, tag_name) DO NOTHING
+        `
       );
       const insertReleases = db.transaction((releases) => {
         for (const release of releases) insert.run(release);

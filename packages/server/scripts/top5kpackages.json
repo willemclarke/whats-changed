@@ -1932,16 +1932,6 @@
     }
   },
   {
-    "name": "@types/react",
-    "version": "18.2.58",
-    "description": "TypeScript definitions for react",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40types%2Freact",
-      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react",
-      "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped"
-    }
-  },
-  {
     "name": "@typescript-eslint/eslint-plugin",
     "version": "7.0.2",
     "description": "TypeScript plugin for ESLint",
@@ -1949,6 +1939,16 @@
       "npm": "https://www.npmjs.com/package/%40typescript-eslint%2Feslint-plugin",
       "homepage": "https://github.com/typescript-eslint/typescript-eslint#readme",
       "repository": "https://github.com/typescript-eslint/typescript-eslint"
+    }
+  },
+  {
+    "name": "@types/react",
+    "version": "18.2.58",
+    "description": "TypeScript definitions for react",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40types%2Freact",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react",
+      "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped"
     }
   },
   {
@@ -2571,16 +2571,6 @@
       "npm": "https://www.npmjs.com/package/parent-module",
       "homepage": "https://github.com/sindresorhus/parent-module#readme",
       "repository": "https://github.com/sindresorhus/parent-module"
-    }
-  },
-  {
-    "name": "mysql2",
-    "version": "3.9.1",
-    "description": "fast mysql driver. Implements core protocol, prepared statements, ssl and compression in native JS",
-    "links": {
-      "npm": "https://www.npmjs.com/package/mysql2",
-      "homepage": "https://sidorares.github.io/node-mysql2/docs",
-      "repository": "https://github.com/sidorares/node-mysql2"
     }
   },
   {
@@ -4444,16 +4434,6 @@
     }
   },
   {
-    "name": "libphonenumber-js",
-    "version": "1.10.56",
-    "description": "A simpler (and smaller) rewrite of Google Android's libphonenumber library in javascript",
-    "links": {
-      "npm": "https://www.npmjs.com/package/libphonenumber-js",
-      "homepage": "https://gitlab.com/catamphetamine/libphonenumber-js#readme",
-      "repository": "https://gitlab.com/catamphetamine/libphonenumber-js"
-    }
-  },
-  {
     "name": "esutils",
     "version": "2.0.3",
     "description": "utility box for ECMAScript language tools",
@@ -5585,16 +5565,6 @@
       "npm": "https://www.npmjs.com/package/%40typescript-eslint%2Futils",
       "homepage": "https://github.com/typescript-eslint/typescript-eslint#readme",
       "repository": "https://github.com/typescript-eslint/typescript-eslint"
-    }
-  },
-  {
-    "name": "@types/chai",
-    "version": "4.3.11",
-    "description": "TypeScript definitions for chai",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40types%2Fchai",
-      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/chai",
-      "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped"
     }
   },
   {
@@ -7070,6 +7040,16 @@
     }
   },
   {
+    "name": "domutils",
+    "version": "3.1.0",
+    "description": "Utilities for working with htmlparser2's dom",
+    "links": {
+      "npm": "https://www.npmjs.com/package/domutils",
+      "homepage": "https://github.com/fb55/domutils#readme",
+      "repository": "https://github.com/fb55/domutils"
+    }
+  },
+  {
     "name": "json5",
     "version": "2.2.3",
     "description": "JSON for Humans",
@@ -7753,16 +7733,6 @@
       "npm": "https://www.npmjs.com/package/bs58",
       "homepage": "https://github.com/cryptocoinjs/bs58#readme",
       "repository": "https://github.com/cryptocoinjs/bs58"
-    }
-  },
-  {
-    "name": "domutils",
-    "version": "3.1.0",
-    "description": "Utilities for working with htmlparser2's dom",
-    "links": {
-      "npm": "https://www.npmjs.com/package/domutils",
-      "homepage": "https://github.com/fb55/domutils#readme",
-      "repository": "https://github.com/fb55/domutils"
     }
   },
   {
@@ -12692,6 +12662,16 @@
     }
   },
   {
+    "name": "terser",
+    "version": "5.28.0",
+    "description": "JavaScript parser, mangler/compressor and beautifier toolkit for ES6+",
+    "links": {
+      "npm": "https://www.npmjs.com/package/terser",
+      "homepage": "https://terser.org",
+      "repository": "https://github.com/terser/terser"
+    }
+  },
+  {
     "name": "parse-json",
     "version": "8.1.0",
     "description": "Parse JSON with more helpful errors",
@@ -12729,16 +12709,6 @@
       "npm": "https://www.npmjs.com/package/unique-slug",
       "homepage": "https://github.com/npm/unique-slug#readme",
       "repository": "https://github.com/npm/unique-slug"
-    }
-  },
-  {
-    "name": "terser",
-    "version": "5.27.2",
-    "description": "JavaScript parser, mangler/compressor and beautifier toolkit for ES6+",
-    "links": {
-      "npm": "https://www.npmjs.com/package/terser",
-      "homepage": "https://terser.org",
-      "repository": "https://github.com/terser/terser"
     }
   },
   {
@@ -14765,6 +14735,16 @@
     }
   },
   {
+    "name": "mysql2",
+    "version": "3.9.1",
+    "description": "fast mysql driver. Implements core protocol, prepared statements, ssl and compression in native JS",
+    "links": {
+      "npm": "https://www.npmjs.com/package/mysql2",
+      "homepage": "https://sidorares.github.io/node-mysql2/docs",
+      "repository": "https://github.com/sidorares/node-mysql2"
+    }
+  },
+  {
     "name": "case",
     "version": "1.6.3",
     "description": "Extensible string utility for converting, identifying and flipping string case",
@@ -14808,6 +14788,16 @@
       "npm": "https://www.npmjs.com/package/chart.js",
       "homepage": "https://www.chartjs.org",
       "repository": "https://github.com/chartjs/Chart.js"
+    }
+  },
+  {
+    "name": "@graphql-tools/utils",
+    "version": "10.1.0",
+    "description": "Common package containing utils and types for GraphQL tools",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Futils",
+      "homepage": "https://github.com/ardatan/graphql-tools#readme",
+      "repository": "https://github.com/ardatan/graphql-tools"
     }
   },
   {
@@ -15079,6 +15069,16 @@
       "npm": "https://www.npmjs.com/package/%40babel%2Fplugin-transform-arrow-functions",
       "homepage": "https://babel.dev/docs/en/next/babel-plugin-transform-arrow-functions",
       "repository": "https://github.com/babel/babel"
+    }
+  },
+  {
+    "name": "@types/chai",
+    "version": "4.3.12",
+    "description": "TypeScript definitions for chai",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40types%2Fchai",
+      "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/chai",
+      "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped"
     }
   },
   {
@@ -15355,6 +15355,16 @@
       "npm": "https://www.npmjs.com/package/friendly-errors-webpack-plugin",
       "homepage": "https://github.com/geowarin/friendly-errors-webpack-plugin#readme",
       "repository": "https://github.com/geowarin/friendly-errors-webpack-plugin"
+    }
+  },
+  {
+    "name": "libphonenumber-js",
+    "version": "1.10.57",
+    "description": "A simpler (and smaller) rewrite of Google Android's libphonenumber library in javascript",
+    "links": {
+      "npm": "https://www.npmjs.com/package/libphonenumber-js",
+      "homepage": "https://gitlab.com/catamphetamine/libphonenumber-js#readme",
+      "repository": "https://gitlab.com/catamphetamine/libphonenumber-js"
     }
   },
   {
@@ -17130,16 +17140,6 @@
     }
   },
   {
-    "name": "vue-resource",
-    "version": "1.5.3",
-    "description": "The HTTP client for Vue.js",
-    "links": {
-      "npm": "https://www.npmjs.com/package/vue-resource",
-      "homepage": "https://github.com/pagekit/vue-resource",
-      "repository": "https://github.com/pagekit/vue-resource"
-    }
-  },
-  {
     "name": "json-colorizer",
     "version": "2.2.2",
     "description": "A library to format JSON with colors for display in the console",
@@ -17147,6 +17147,16 @@
       "npm": "https://www.npmjs.com/package/json-colorizer",
       "homepage": "https://github.com/joeattardi/json-colorizer#readme",
       "repository": "https://github.com/joeattardi/json-colorizer"
+    }
+  },
+  {
+    "name": "vue-resource",
+    "version": "1.5.3",
+    "description": "The HTTP client for Vue.js",
+    "links": {
+      "npm": "https://www.npmjs.com/package/vue-resource",
+      "homepage": "https://github.com/pagekit/vue-resource",
+      "repository": "https://github.com/pagekit/vue-resource"
     }
   },
   {
@@ -17459,16 +17469,6 @@
     }
   },
   {
-    "name": "eslint-config-airbnb-typescript",
-    "version": "17.1.0",
-    "description": "Airbnb's ESLint config with TypeScript support",
-    "links": {
-      "npm": "https://www.npmjs.com/package/eslint-config-airbnb-typescript",
-      "homepage": "https://github.com/iamturns/eslint-config-airbnb-typescript",
-      "repository": "https://github.com/iamturns/eslint-config-airbnb-typescript"
-    }
-  },
-  {
     "name": "vorpal",
     "version": "1.12.0",
     "description": "Node's first framework for building immersive CLI apps.",
@@ -17617,16 +17617,6 @@
     }
   },
   {
-    "name": "body",
-    "version": "5.1.0",
-    "description": "Body parsing",
-    "links": {
-      "npm": "https://www.npmjs.com/package/body",
-      "homepage": "https://github.com/Raynos/body",
-      "repository": "https://github.com/Raynos/body"
-    }
-  },
-  {
     "name": "toidentifier",
     "version": "1.0.1",
     "description": "Convert a string of words to a JavaScript identifier",
@@ -17634,6 +17624,16 @@
       "npm": "https://www.npmjs.com/package/toidentifier",
       "homepage": "https://github.com/component/toidentifier#readme",
       "repository": "https://github.com/component/toidentifier"
+    }
+  },
+  {
+    "name": "body",
+    "version": "5.1.0",
+    "description": "Body parsing",
+    "links": {
+      "npm": "https://www.npmjs.com/package/body",
+      "homepage": "https://github.com/Raynos/body",
+      "repository": "https://github.com/Raynos/body"
     }
   },
   {
@@ -18720,6 +18720,16 @@
     }
   },
   {
+    "name": "@apollo/client",
+    "version": "3.9.5",
+    "description": "A fully-featured caching GraphQL client.",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40apollo%2Fclient",
+      "homepage": "https://www.apollographql.com/docs/react/",
+      "repository": "https://github.com/apollographql/apollo-client"
+    }
+  },
+  {
     "name": "is-my-json-valid",
     "version": "2.20.6",
     "description": "A [JSONSchema](https://json-schema.org/) validator that uses code generation to be extremely fast.",
@@ -18984,16 +18994,6 @@
       "npm": "https://www.npmjs.com/package/get-uri",
       "homepage": "https://github.com/TooTallNate/proxy-agents#readme",
       "repository": "https://github.com/TooTallNate/proxy-agents"
-    }
-  },
-  {
-    "name": "@apollo/client",
-    "version": "3.9.5",
-    "description": "A fully-featured caching GraphQL client.",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40apollo%2Fclient",
-      "homepage": "https://www.apollographql.com/docs/react/",
-      "repository": "https://github.com/apollographql/apollo-client"
     }
   },
   {
@@ -24342,6 +24342,16 @@
     }
   },
   {
+    "name": "eslint-config-airbnb-typescript",
+    "version": "17.1.0",
+    "description": "Airbnb's ESLint config with TypeScript support",
+    "links": {
+      "npm": "https://www.npmjs.com/package/eslint-config-airbnb-typescript",
+      "homepage": "https://github.com/iamturns/eslint-config-airbnb-typescript",
+      "repository": "https://github.com/iamturns/eslint-config-airbnb-typescript"
+    }
+  },
+  {
     "name": "xml-js",
     "version": "1.6.11",
     "description": "A convertor between XML text and Javascript object / JSON text.",
@@ -24975,16 +24985,6 @@
     }
   },
   {
-    "name": "@graphql-tools/utils",
-    "version": "10.0.13",
-    "description": "Common package containing utils and types for GraphQL tools",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Futils",
-      "homepage": "https://github.com/ardatan/graphql-tools#readme",
-      "repository": "https://github.com/ardatan/graphql-tools"
-    }
-  },
-  {
     "name": "@iarna/toml",
     "version": "2.2.5",
     "description": "Better TOML parsing and stringifying all in that familiar JSON interface.",
@@ -25398,16 +25398,6 @@
       "npm": "https://www.npmjs.com/package/buble",
       "homepage": "https://github.com/bublejs/buble#README",
       "repository": "https://github.com/bublejs/buble"
-    }
-  },
-  {
-    "name": "libmime",
-    "version": "5.2.1",
-    "description": "Encode and decode quoted printable and base64 strings",
-    "links": {
-      "npm": "https://www.npmjs.com/package/libmime",
-      "homepage": "https://github.com/andris9/libmime",
-      "repository": "https://github.com/andris9/libmime"
     }
   },
   {
@@ -26304,6 +26294,16 @@
     }
   },
   {
+    "name": "@graphql-tools/merge",
+    "version": "9.0.2",
+    "description": "A set of utils for faster development of GraphQL tools",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fmerge",
+      "homepage": "https://github.com/ardatan/graphql-tools#readme",
+      "repository": "https://github.com/ardatan/graphql-tools"
+    }
+  },
+  {
     "name": "ohash",
     "version": "1.1.3",
     "description": "Super fast hashing library based on murmurhash3 written in Vanilla JS",
@@ -27101,6 +27101,16 @@
     }
   },
   {
+    "name": "swagger-ui-dist",
+    "version": "5.11.8",
+    "description": "[![NPM version](https://badge.fury.io/js/swagger-ui-dist.svg)](http://badge.fury.io/js/swagger-ui-dist)",
+    "links": {
+      "npm": "https://www.npmjs.com/package/swagger-ui-dist",
+      "homepage": "https://github.com/swagger-api/swagger-ui#readme",
+      "repository": "https://github.com/swagger-api/swagger-ui"
+    }
+  },
+  {
     "name": "@aws-sdk/client-lambda",
     "version": "3.518.0",
     "description": "AWS SDK for JavaScript Lambda Client for Node.js, Browser and React Native",
@@ -27257,16 +27267,6 @@
       "npm": "https://www.npmjs.com/package/%40vitejs%2Fplugin-vue",
       "homepage": "https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#readme",
       "repository": "https://github.com/vitejs/vite-plugin-vue"
-    }
-  },
-  {
-    "name": "swagger-ui-dist",
-    "version": "5.11.7",
-    "description": "[![NPM version](https://badge.fury.io/js/swagger-ui-dist.svg)](http://badge.fury.io/js/swagger-ui-dist)",
-    "links": {
-      "npm": "https://www.npmjs.com/package/swagger-ui-dist",
-      "homepage": "https://github.com/swagger-api/swagger-ui#readme",
-      "repository": "https://github.com/swagger-api/swagger-ui"
     }
   },
   {
@@ -27628,16 +27628,6 @@
     }
   },
   {
-    "name": "srcset",
-    "version": "5.0.1",
-    "description": "Parse and stringify the HTML `<img>` srcset attribute",
-    "links": {
-      "npm": "https://www.npmjs.com/package/srcset",
-      "homepage": "https://github.com/sindresorhus/srcset#readme",
-      "repository": "https://github.com/sindresorhus/srcset"
-    }
-  },
-  {
     "name": "modernizr",
     "version": "3.13.0",
     "description": "Modernizr is a JavaScript library that detects HTML5 and CSS3 features in the user’s browser.",
@@ -27655,6 +27645,16 @@
       "npm": "https://www.npmjs.com/package/jquery-validation",
       "homepage": "https://github.com/jquery-validation/jquery-validation#readme",
       "repository": "https://github.com/jquery-validation/jquery-validation"
+    }
+  },
+  {
+    "name": "@mui/x-date-pickers",
+    "version": "6.19.5",
+    "description": "The community edition of the date picker components (MUI X).",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40mui%2Fx-date-pickers",
+      "homepage": "https://mui.com/x/react-date-pickers/",
+      "repository": "https://github.com/mui/mui-x"
     }
   },
   {
@@ -27919,6 +27919,16 @@
     }
   },
   {
+    "name": "@graphql-tools/schema",
+    "version": "10.0.2",
+    "description": "A set of utils for faster development of GraphQL tools",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fschema",
+      "homepage": "https://github.com/ardatan/graphql-tools#readme",
+      "repository": "https://github.com/ardatan/graphql-tools"
+    }
+  },
+  {
     "name": "trough",
     "version": "2.2.0",
     "description": "`trough` is middleware",
@@ -27965,16 +27975,6 @@
       "npm": "https://www.npmjs.com/package/documentation",
       "homepage": "https://documentation.js.org",
       "repository": "https://github.com/documentationjs/documentation"
-    }
-  },
-  {
-    "name": "@mui/x-date-pickers",
-    "version": "6.19.4",
-    "description": "The community edition of the date picker components (MUI X).",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40mui%2Fx-date-pickers",
-      "homepage": "https://mui.com/x/react-date-pickers/",
-      "repository": "https://github.com/mui/mui-x"
     }
   },
   {
@@ -28358,6 +28358,16 @@
     }
   },
   {
+    "name": "@sideway/address",
+    "version": "5.0.0",
+    "description": "Email address and domain validation",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40sideway%2Faddress",
+      "homepage": "https://github.com/sideway/address#readme",
+      "repository": "https://github.com/sideway/address"
+    }
+  },
+  {
     "name": "@sentry/react",
     "version": "7.102.1",
     "description": "Official Sentry SDK for React.js",
@@ -28368,16 +28378,6 @@
     }
   },
   {
-    "name": "twig",
-    "version": "1.17.1",
-    "description": "JS port of the Twig templating language.",
-    "links": {
-      "npm": "https://www.npmjs.com/package/twig",
-      "homepage": "https://github.com/twigjs/twig.js",
-      "repository": "https://github.com/twigjs/twig.js"
-    }
-  },
-  {
     "name": "ali-oss",
     "version": "6.20.0",
     "description": "aliyun oss(object storage service) node client",
@@ -28385,6 +28385,16 @@
       "npm": "https://www.npmjs.com/package/ali-oss",
       "homepage": "https://github.com/ali-sdk/ali-oss",
       "repository": "https://github.com/ali-sdk/ali-oss"
+    }
+  },
+  {
+    "name": "twig",
+    "version": "1.17.1",
+    "description": "JS port of the Twig templating language.",
+    "links": {
+      "npm": "https://www.npmjs.com/package/twig",
+      "homepage": "https://github.com/twigjs/twig.js",
+      "repository": "https://github.com/twigjs/twig.js"
     }
   },
   {
@@ -28494,16 +28504,6 @@
     }
   },
   {
-    "name": "@graphql-tools/merge",
-    "version": "9.0.2",
-    "description": "A set of utils for faster development of GraphQL tools",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fmerge",
-      "homepage": "https://github.com/ardatan/graphql-tools#readme",
-      "repository": "https://github.com/ardatan/graphql-tools"
-    }
-  },
-  {
     "name": "@nuxt/kit",
     "version": "3.10.3",
     "description": "Toolkit for authoring modules and interacting with Nuxt",
@@ -28601,16 +28601,6 @@
       "npm": "https://www.npmjs.com/package/browserify-shim",
       "homepage": "https://github.com/thlorenz/browserify-shim#readme",
       "repository": "https://github.com/thlorenz/browserify-shim"
-    }
-  },
-  {
-    "name": "art",
-    "version": "0.10.3",
-    "description": "Cross-browser Vector Graphics",
-    "links": {
-      "npm": "https://www.npmjs.com/package/art",
-      "homepage": "http://sebmarkbage.github.io/art",
-      "repository": "https://github.com/sebmarkbage/art"
     }
   },
   {
@@ -31184,6 +31174,12 @@
     }
   },
   {
+    "name": "buffer-indexof",
+    "version": "1.1.1",
+    "description": "find the index of a buffer in a buffer",
+    "links": { "npm": "https://www.npmjs.com/package/buffer-indexof" }
+  },
+  {
     "name": "react-content-loader",
     "version": "6.2.1",
     "description": "SVG-Powered component to easily create placeholder loadings (like Facebook cards loading)",
@@ -31192,12 +31188,6 @@
       "homepage": "https://github.com/danilowoz/react-content-loader",
       "repository": "https://github.com/danilowoz/react-content-loader"
     }
-  },
-  {
-    "name": "buffer-indexof",
-    "version": "1.1.1",
-    "description": "find the index of a buffer in a buffer",
-    "links": { "npm": "https://www.npmjs.com/package/buffer-indexof" }
   },
   {
     "name": "ng2-file-upload",
@@ -33535,7 +33525,7 @@
   },
   {
     "name": "lucide-react",
-    "version": "0.337.0",
+    "version": "0.338.0",
     "description": "A Lucide icon library package for React applications",
     "links": {
       "npm": "https://www.npmjs.com/package/lucide-react",
@@ -33601,16 +33591,6 @@
       "npm": "https://www.npmjs.com/package/regenerator",
       "homepage": "http://github.com/facebook/regenerator",
       "repository": "https://github.com/facebook/regenerator"
-    }
-  },
-  {
-    "name": "@graphql-tools/schema",
-    "version": "10.0.2",
-    "description": "A set of utils for faster development of GraphQL tools",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fschema",
-      "homepage": "https://github.com/ardatan/graphql-tools#readme",
-      "repository": "https://github.com/ardatan/graphql-tools"
     }
   },
   {
@@ -36240,16 +36220,6 @@
     }
   },
   {
-    "name": "auth0-js",
-    "version": "9.24.1",
-    "description": "Auth0 headless browser sdk",
-    "links": {
-      "npm": "https://www.npmjs.com/package/auth0-js",
-      "homepage": "https://github.com/auth0/auth0.js#readme",
-      "repository": "https://github.com/auth0/auth0.js"
-    }
-  },
-  {
     "name": "jsonify",
     "version": "0.0.1",
     "description": "JSON without touching any globals",
@@ -37008,6 +36978,16 @@
     }
   },
   {
+    "name": "@react-native-async-storage/async-storage",
+    "version": "1.22.2",
+    "description": "Asynchronous, persistent, key-value storage system for React Native.",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40react-native-async-storage%2Fasync-storage",
+      "homepage": "https://github.com/react-native-async-storage/async-storage#readme",
+      "repository": "https://github.com/react-native-async-storage/async-storage"
+    }
+  },
+  {
     "name": "vuetify",
     "version": "3.5.5",
     "description": "Vue Material Component Framework",
@@ -37089,16 +37069,6 @@
       "npm": "https://www.npmjs.com/package/%40storybook%2Fpreview",
       "homepage": "https://github.com/storybookjs/storybook/tree/next/code/lib/preview",
       "repository": "https://github.com/storybookjs/storybook"
-    }
-  },
-  {
-    "name": "neo4j-driver",
-    "version": "5.17.0",
-    "description": "The official Neo4j driver for Javascript",
-    "links": {
-      "npm": "https://www.npmjs.com/package/neo4j-driver",
-      "homepage": "https://github.com/neo4j/neo4j-javascript-driver#readme",
-      "repository": "https://github.com/neo4j/neo4j-javascript-driver"
     }
   },
   {
@@ -37487,16 +37457,6 @@
     }
   },
   {
-    "name": "express-flash",
-    "version": "0.0.2",
-    "description": "Flash Messages for your Express Application",
-    "links": {
-      "npm": "https://www.npmjs.com/package/express-flash",
-      "homepage": "https://github.com/RGBboy/express-flash",
-      "repository": "https://github.com/RGBboy/express-flash"
-    }
-  },
-  {
     "name": "caller-callsite",
     "version": "5.0.0",
     "description": "Get the callsite of the caller function",
@@ -37504,6 +37464,16 @@
       "npm": "https://www.npmjs.com/package/caller-callsite",
       "homepage": "https://github.com/sindresorhus/caller-callsite#readme",
       "repository": "https://github.com/sindresorhus/caller-callsite"
+    }
+  },
+  {
+    "name": "express-flash",
+    "version": "0.0.2",
+    "description": "Flash Messages for your Express Application",
+    "links": {
+      "npm": "https://www.npmjs.com/package/express-flash",
+      "homepage": "https://github.com/RGBboy/express-flash",
+      "repository": "https://github.com/RGBboy/express-flash"
     }
   },
   {
@@ -38158,16 +38128,6 @@
     }
   },
   {
-    "name": "@sideway/address",
-    "version": "5.0.0",
-    "description": "Email address and domain validation",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40sideway%2Faddress",
-      "homepage": "https://github.com/sideway/address#readme",
-      "repository": "https://github.com/sideway/address"
-    }
-  },
-  {
     "name": "@vitest/expect",
     "version": "1.3.1",
     "description": "Jest's expect matchers as a Chai plugin",
@@ -38245,6 +38205,16 @@
       "npm": "https://www.npmjs.com/package/sloc",
       "homepage": "https://github.com/flosse/sloc#readme",
       "repository": "https://github.com/flosse/sloc"
+    }
+  },
+  {
+    "name": "@graphql-tools/graphql-file-loader",
+    "version": "8.0.0",
+    "description": "A set of utils for faster development of GraphQL tools",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fgraphql-file-loader",
+      "homepage": "https://github.com/ardatan/graphql-tools#readme",
+      "repository": "https://github.com/ardatan/graphql-tools"
     }
   },
   {
@@ -38371,6 +38341,16 @@
       "npm": "https://www.npmjs.com/package/gulp-exec",
       "homepage": "https://github.com/robrich/gulp-exec",
       "repository": "https://github.com/robrich/gulp-exec"
+    }
+  },
+  {
+    "name": "@graphql-tools/wrap",
+    "version": "10.0.1",
+    "description": "A set of utils for faster development of GraphQL tools",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fwrap",
+      "homepage": "https://github.com/ardatan/graphql-tools#readme",
+      "repository": "https://github.com/ardatan/graphql-tools"
     }
   },
   {
@@ -39026,16 +39006,6 @@
     }
   },
   {
-    "name": "@react-native-async-storage/async-storage",
-    "version": "1.22.1",
-    "description": "Asynchronous, persistent, key-value storage system for React Native.",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40react-native-async-storage%2Fasync-storage",
-      "homepage": "https://github.com/react-native-async-storage/async-storage#readme",
-      "repository": "https://github.com/react-native-async-storage/async-storage"
-    }
-  },
-  {
     "name": "@svgr/babel-plugin-transform-svg-component",
     "version": "8.0.0",
     "description": "Transform SVG into component",
@@ -39103,16 +39073,6 @@
       "npm": "https://www.npmjs.com/package/new-github-release-url",
       "homepage": "https://github.com/sindresorhus/new-github-release-url#readme",
       "repository": "https://github.com/sindresorhus/new-github-release-url"
-    }
-  },
-  {
-    "name": "@graphql-tools/graphql-file-loader",
-    "version": "8.0.0",
-    "description": "A set of utils for faster development of GraphQL tools",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fgraphql-file-loader",
-      "homepage": "https://github.com/ardatan/graphql-tools#readme",
-      "repository": "https://github.com/ardatan/graphql-tools"
     }
   },
   {
@@ -39219,16 +39179,6 @@
       "npm": "https://www.npmjs.com/package/numeral",
       "homepage": "http://numeraljs.com",
       "repository": "https://github.com/adamwdraper/Numeral-js"
-    }
-  },
-  {
-    "name": "@graphql-tools/wrap",
-    "version": "10.0.1",
-    "description": "A set of utils for faster development of GraphQL tools",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fwrap",
-      "homepage": "https://github.com/ardatan/graphql-tools#readme",
-      "repository": "https://github.com/ardatan/graphql-tools"
     }
   },
   {
@@ -39594,6 +39544,16 @@
     }
   },
   {
+    "name": "@graphql-tools/delegate",
+    "version": "10.0.3",
+    "description": "A set of utils for faster development of GraphQL tools",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fdelegate",
+      "homepage": "https://github.com/ardatan/graphql-tools#readme",
+      "repository": "https://github.com/ardatan/graphql-tools"
+    }
+  },
+  {
     "name": "mississippi",
     "version": "4.0.0",
     "description": "a collection of useful streams",
@@ -39806,16 +39766,6 @@
     }
   },
   {
-    "name": "react-final-form",
-    "version": "6.5.9",
-    "description": "🏁 High performance subscription-based form state management for React",
-    "links": {
-      "npm": "https://www.npmjs.com/package/react-final-form",
-      "homepage": "https://github.com/final-form/react-final-form#readme",
-      "repository": "https://github.com/final-form/react-final-form"
-    }
-  },
-  {
     "name": "@sentry/cli",
     "version": "2.28.6",
     "description": "A command line utility to work with Sentry. https://docs.sentry.io/hosted/learn/cli/",
@@ -40006,6 +39956,16 @@
     }
   },
   {
+    "name": "@pulumi/pulumi",
+    "version": "3.107.0",
+    "description": "Pulumi's Node.js SDK",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40pulumi%2Fpulumi",
+      "homepage": "https://github.com/pulumi/pulumi#readme",
+      "repository": "https://github.com/pulumi/pulumi"
+    }
+  },
+  {
     "name": "gulp-run",
     "version": "1.7.1",
     "description": "Pipe to shell commands in gulp",
@@ -40033,16 +39993,6 @@
       "npm": "https://www.npmjs.com/package/%40storybook%2Fcore-client",
       "homepage": "https://github.com/storybookjs/storybook#readme",
       "repository": "https://github.com/storybookjs/storybook"
-    }
-  },
-  {
-    "name": "@pulumi/pulumi",
-    "version": "3.107.0",
-    "description": "Pulumi's Node.js SDK",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40pulumi%2Fpulumi",
-      "homepage": "https://github.com/pulumi/pulumi#readme",
-      "repository": "https://github.com/pulumi/pulumi"
     }
   },
   {
@@ -40286,6 +40236,16 @@
     }
   },
   {
+    "name": "chromium-bidi",
+    "version": "0.5.11",
+    "description": "An implementation of the WebDriver BiDi protocol for Chromium implemented as a JavaScript layer translating between BiDi and CDP, running inside a Chrome tab.",
+    "links": {
+      "npm": "https://www.npmjs.com/package/chromium-bidi",
+      "homepage": "https://github.com/GoogleChromeLabs/chromium-bidi#readme",
+      "repository": "https://github.com/GoogleChromeLabs/chromium-bidi"
+    }
+  },
+  {
     "name": "istanbul-lib-hook",
     "version": "3.0.0",
     "description": "Hooks for require, vm and script used in istanbul",
@@ -40458,26 +40418,6 @@
       "npm": "https://www.npmjs.com/package/css-element-queries",
       "homepage": "https://github.com/marcj/css-element-queries",
       "repository": "https://github.com/marcj/css-element-queries"
-    }
-  },
-  {
-    "name": "chromium-bidi",
-    "version": "0.5.10",
-    "description": "An implementation of the WebDriver BiDi protocol for Chromium implemented as a JavaScript layer translating between BiDi and CDP, running inside a Chrome tab.",
-    "links": {
-      "npm": "https://www.npmjs.com/package/chromium-bidi",
-      "homepage": "https://github.com/GoogleChromeLabs/chromium-bidi#readme",
-      "repository": "https://github.com/GoogleChromeLabs/chromium-bidi"
-    }
-  },
-  {
-    "name": "@graphql-tools/delegate",
-    "version": "10.0.3",
-    "description": "A set of utils for faster development of GraphQL tools",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fdelegate",
-      "homepage": "https://github.com/ardatan/graphql-tools#readme",
-      "repository": "https://github.com/ardatan/graphql-tools"
     }
   },
   {
@@ -41106,6 +41046,16 @@
     }
   },
   {
+    "name": "@mui/x-data-grid",
+    "version": "6.19.5",
+    "description": "The community edition of the data grid component (MUI X).",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40mui%2Fx-data-grid",
+      "homepage": "https://mui.com/x/react-data-grid/",
+      "repository": "https://github.com/mui/mui-x"
+    }
+  },
+  {
     "name": "@stitches/react",
     "version": "1.2.8",
     "description": "The modern CSS-in-JS library",
@@ -41219,16 +41169,6 @@
       "npm": "https://www.npmjs.com/package/react-device-detect",
       "homepage": "https://github.com/duskload/react-device-detect#readme",
       "repository": "https://github.com/duskload/react-device-detect"
-    }
-  },
-  {
-    "name": "@mui/x-data-grid",
-    "version": "6.19.4",
-    "description": "The community edition of the data grid component (MUI X).",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40mui%2Fx-data-grid",
-      "homepage": "https://mui.com/x/react-data-grid/",
-      "repository": "https://github.com/mui/mui-x"
     }
   },
   {
@@ -41359,16 +41299,6 @@
       "npm": "https://www.npmjs.com/package/%40aws-sdk%2Fclient-ssm",
       "homepage": "https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-ssm",
       "repository": "https://github.com/aws/aws-sdk-js-v3"
-    }
-  },
-  {
-    "name": "libbase64",
-    "version": "1.2.1",
-    "description": "Encode and decode base64 encoded strings",
-    "links": {
-      "npm": "https://www.npmjs.com/package/libbase64",
-      "homepage": "https://github.com/nodemailer/libbase64",
-      "repository": "https://github.com/nodemailer/libbase64"
     }
   },
   {
@@ -41505,6 +41435,16 @@
       "npm": "https://www.npmjs.com/package/%40dnd-kit%2Futilities",
       "homepage": "https://github.com/clauderic/dnd-kit#readme",
       "repository": "https://github.com/clauderic/dnd-kit"
+    }
+  },
+  {
+    "name": "@graphql-tools/relay-operation-optimizer",
+    "version": "7.0.0",
+    "description": "Package for optimizing your GraphQL operations relay style.",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Frelay-operation-optimizer",
+      "homepage": "https://github.com/ardatan/graphql-tools#readme",
+      "repository": "https://github.com/ardatan/graphql-tools"
     }
   },
   {
@@ -41794,16 +41734,6 @@
       "npm": "https://www.npmjs.com/package/keymaster",
       "homepage": "https://github.com/madrobby/keymaster",
       "repository": "https://github.com/madrobby/keymaster"
-    }
-  },
-  {
-    "name": "@graphql-tools/relay-operation-optimizer",
-    "version": "7.0.0",
-    "description": "Package for optimizing your GraphQL operations relay style.",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Frelay-operation-optimizer",
-      "homepage": "https://github.com/ardatan/graphql-tools#readme",
-      "repository": "https://github.com/ardatan/graphql-tools"
     }
   },
   {
@@ -43145,6 +43075,16 @@
     }
   },
   {
+    "name": "@tiptap/core",
+    "version": "2.2.4",
+    "description": "headless rich text editor",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40tiptap%2Fcore",
+      "homepage": "https://tiptap.dev",
+      "repository": "https://github.com/ueberdosis/tiptap"
+    }
+  },
+  {
     "name": "couchbase",
     "version": "4.2.10",
     "description": "The official Couchbase Node.js Client Library.",
@@ -43222,6 +43162,16 @@
       "npm": "https://www.npmjs.com/package/jotai",
       "homepage": "https://github.com/pmndrs/jotai",
       "repository": "https://github.com/pmndrs/jotai"
+    }
+  },
+  {
+    "name": "@graphql-tools/url-loader",
+    "version": "8.0.1",
+    "description": "A set of utils for faster development of GraphQL tools",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Furl-loader",
+      "homepage": "https://github.com/ardatan/graphql-tools#readme",
+      "repository": "https://github.com/ardatan/graphql-tools"
     }
   },
   {
@@ -43324,6 +43274,16 @@
     }
   },
   {
+    "name": "discord.js",
+    "version": "14.14.1",
+    "description": "A powerful library for interacting with the Discord API",
+    "links": {
+      "npm": "https://www.npmjs.com/package/discord.js",
+      "homepage": "https://discord.js.org",
+      "repository": "https://github.com/discordjs/discord.js"
+    }
+  },
+  {
     "name": "@nx/js",
     "version": "18.0.4",
     "description": "The JS plugin for Nx contains executors and generators that provide the best experience for developing JavaScript and TypeScript projects.",
@@ -43423,16 +43383,6 @@
       "npm": "https://www.npmjs.com/package/turndown",
       "homepage": "https://github.com/mixmark-io/turndown#readme",
       "repository": "https://github.com/mixmark-io/turndown"
-    }
-  },
-  {
-    "name": "discord.js",
-    "version": "14.14.1",
-    "description": "A powerful library for interacting with the Discord API",
-    "links": {
-      "npm": "https://www.npmjs.com/package/discord.js",
-      "homepage": "https://discord.js.org",
-      "repository": "https://github.com/discordjs/discord.js"
     }
   },
   {
@@ -43603,6 +43553,16 @@
       "npm": "https://www.npmjs.com/package/gaze",
       "homepage": "https://github.com/shama/gaze",
       "repository": "https://github.com/shama/gaze"
+    }
+  },
+  {
+    "name": "@tiptap/pm",
+    "version": "2.2.4",
+    "description": "prosemirror wrapper package for tiptap",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40tiptap%2Fpm",
+      "homepage": "https://tiptap.dev",
+      "repository": "https://github.com/ueberdosis/tiptap"
     }
   },
   {
@@ -43901,16 +43861,6 @@
     }
   },
   {
-    "name": "@graphql-tools/url-loader",
-    "version": "8.0.1",
-    "description": "A set of utils for faster development of GraphQL tools",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Furl-loader",
-      "homepage": "https://github.com/ardatan/graphql-tools#readme",
-      "repository": "https://github.com/ardatan/graphql-tools"
-    }
-  },
-  {
     "name": "bad-words",
     "version": "3.0.4",
     "description": "A javascript filter for bad words",
@@ -44031,16 +43981,6 @@
     }
   },
   {
-    "name": "@chakra-ui/react",
-    "version": "2.8.2",
-    "description": "Responsive and accessible React UI components built with React and Emotion",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40chakra-ui%2Freact",
-      "homepage": "https://chakra-ui.com/",
-      "repository": "https://github.com/chakra-ui/chakra-ui"
-    }
-  },
-  {
     "name": "cpy-cli",
     "version": "5.0.0",
     "description": "Copy files",
@@ -44048,6 +43988,16 @@
       "npm": "https://www.npmjs.com/package/cpy-cli",
       "homepage": "https://github.com/sindresorhus/cpy-cli#readme",
       "repository": "https://github.com/sindresorhus/cpy-cli"
+    }
+  },
+  {
+    "name": "@chakra-ui/react",
+    "version": "2.8.2",
+    "description": "Responsive and accessible React UI components built with React and Emotion",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40chakra-ui%2Freact",
+      "homepage": "https://chakra-ui.com/",
+      "repository": "https://github.com/chakra-ui/chakra-ui"
     }
   },
   {
@@ -44520,6 +44470,16 @@
     }
   },
   {
+    "name": "@graphql-tools/load",
+    "version": "8.0.1",
+    "description": "A set of utils for faster development of GraphQL tools",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fload",
+      "homepage": "https://github.com/ardatan/graphql-tools#readme",
+      "repository": "https://github.com/ardatan/graphql-tools"
+    }
+  },
+  {
     "name": "random-string",
     "version": "0.2.0",
     "description": "Simple Module for generating Random Strings",
@@ -44696,16 +44656,6 @@
     }
   },
   {
-    "name": "@tiptap/core",
-    "version": "2.2.3",
-    "description": "headless rich text editor",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40tiptap%2Fcore",
-      "homepage": "https://tiptap.dev",
-      "repository": "https://github.com/ueberdosis/tiptap"
-    }
-  },
-  {
     "name": "is-yarn-global",
     "version": "0.4.1",
     "description": "Check if installed by yarn globally without any `fs` calls",
@@ -44805,16 +44755,6 @@
       "npm": "https://www.npmjs.com/package/jss",
       "homepage": "https://cssinjs.org/",
       "repository": "https://github.com/cssinjs/jss"
-    }
-  },
-  {
-    "name": "@tiptap/pm",
-    "version": "2.2.3",
-    "description": "prosemirror wrapper package for tiptap",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40tiptap%2Fpm",
-      "homepage": "https://tiptap.dev",
-      "repository": "https://github.com/ueberdosis/tiptap"
     }
   },
   {
@@ -46151,6 +46091,16 @@
     }
   },
   {
+    "name": "@graphql-tools/executor-http",
+    "version": "1.0.8",
+    "description": "A set of utils for faster development of GraphQL tools",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fexecutor-http",
+      "homepage": "https://github.com/ardatan/graphql-tools#readme",
+      "repository": "https://github.com/ardatan/graphql-tools"
+    }
+  },
+  {
     "name": "json-ptr",
     "version": "3.1.1",
     "description": "A complete implementation of JSON Pointer (RFC 6901) for nodejs and modern browsers.",
@@ -46359,16 +46309,6 @@
     }
   },
   {
-    "name": "@graphql-tools/executor-http",
-    "version": "1.0.8",
-    "description": "A set of utils for faster development of GraphQL tools",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fexecutor-http",
-      "homepage": "https://github.com/ardatan/graphql-tools#readme",
-      "repository": "https://github.com/ardatan/graphql-tools"
-    }
-  },
-  {
     "name": "jenkins",
     "version": "1.1.0",
     "description": "Jenkins client",
@@ -46566,6 +46506,16 @@
       "npm": "https://www.npmjs.com/package/edge",
       "homepage": "https://github.com/tjanczuk/edge",
       "repository": "https://github.com/tjanczuk/edge"
+    }
+  },
+  {
+    "name": "@tiptap/starter-kit",
+    "version": "2.2.4",
+    "description": "starter kit for tiptap",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40tiptap%2Fstarter-kit",
+      "homepage": "https://tiptap.dev",
+      "repository": "https://github.com/ueberdosis/tiptap"
     }
   },
   {
@@ -48063,16 +48013,6 @@
     }
   },
   {
-    "name": "@tiptap/starter-kit",
-    "version": "2.2.3",
-    "description": "starter kit for tiptap",
-    "links": {
-      "npm": "https://www.npmjs.com/package/%40tiptap%2Fstarter-kit",
-      "homepage": "https://tiptap.dev",
-      "repository": "https://github.com/ueberdosis/tiptap"
-    }
-  },
-  {
     "name": "lighthouse",
     "version": "11.6.0",
     "description": "Automated auditing, performance metrics, and best practices for the web.",
@@ -48680,6 +48620,16 @@
     }
   },
   {
+    "name": "@graphql-tools/json-file-loader",
+    "version": "8.0.0",
+    "description": "A set of utils for faster development of GraphQL tools",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40graphql-tools%2Fjson-file-loader",
+      "homepage": "https://github.com/ardatan/graphql-tools#readme",
+      "repository": "https://github.com/ardatan/graphql-tools"
+    }
+  },
+  {
     "name": "file-selector",
     "version": "0.6.0",
     "description": "Convert DataTransfer object to a list of File objects",
@@ -48827,6 +48777,16 @@
       "npm": "https://www.npmjs.com/package/co-request",
       "homepage": "https://github.com/leukhin/co-request#readme",
       "repository": "https://github.com/leukhin/co-request"
+    }
+  },
+  {
+    "name": "@tiptap/extension-link",
+    "version": "2.2.4",
+    "description": "link extension for tiptap",
+    "links": {
+      "npm": "https://www.npmjs.com/package/%40tiptap%2Fextension-link",
+      "homepage": "https://tiptap.dev",
+      "repository": "https://github.com/ueberdosis/tiptap"
     }
   },
   {
@@ -49138,6 +49098,46 @@
       "npm": "https://www.npmjs.com/package/duplicate-package-checker-webpack-plugin",
       "homepage": "https://github.com/darrenscerri/duplicate-package-checker-webpack-plugin#readme",
       "repository": "https://github.com/darrenscerri/duplicate-package-checker-webpack-plugin"
+    }
+  },
+  {
+    "name": "concordance",
+    "version": "5.0.4",
+    "description": "Compare, format, diff and serialize any JavaScript value",
+    "links": {
+      "npm": "https://www.npmjs.com/package/concordance",
+      "homepage": "https://github.com/concordancejs/concordance#readme",
+      "repository": "https://github.com/concordancejs/concordance"
+    }
+  },
+  {
+    "name": "d3-chord",
+    "version": "3.0.1",
+    "description": "Visualize relationships or network flow with an aesthetically-pleasing circular layout.",
+    "links": {
+      "npm": "https://www.npmjs.com/package/d3-chord",
+      "homepage": "https://d3js.org/d3-chord/",
+      "repository": "https://github.com/d3/d3-chord"
+    }
+  },
+  {
+    "name": "difflib",
+    "version": "0.2.4",
+    "description": "text diff library ported from Python's difflib module",
+    "links": {
+      "npm": "https://www.npmjs.com/package/difflib",
+      "homepage": "https://github.com/qiao/difflib.js",
+      "repository": "https://github.com/qiao/difflib.js"
+    }
+  },
+  {
+    "name": "jscpd",
+    "version": "3.5.10",
+    "description": "detector of copy/paste in files",
+    "links": {
+      "npm": "https://www.npmjs.com/package/jscpd",
+      "homepage": "https://github.com/kucherenko/jscpd#readme",
+      "repository": "https://github.com/kucherenko/jscpd"
     }
   }
 ]
