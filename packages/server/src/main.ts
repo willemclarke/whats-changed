@@ -4,9 +4,12 @@ import express from 'express';
 import { z } from 'zod';
 import { getReleases } from './utils';
 import { dependencySchema } from '../../common/src/types';
+import { createDb } from 'scripts/schema';
 
 const app = express();
 const port = process.env.PORT ?? 8080;
+
+createDb();
 
 app.use(cors());
 app.use(bodyParser.json());

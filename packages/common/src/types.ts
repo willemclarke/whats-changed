@@ -26,9 +26,9 @@ const releaseUnion = z.discriminatedUnion('kind', [withReleaseNote, withoutRelea
 
 export const releasesSchema = z.record(z.string(), z.array(releaseUnion));
 
-type WithReleaseNote = z.infer<typeof withReleaseNote>;
+export type WithReleaseNote = z.infer<typeof withReleaseNote>;
 
-type WithoutReleaseNote = z.infer<typeof withoutReleaseNote>;
+export type WithoutReleaseNote = z.infer<typeof withoutReleaseNote>;
 
 export type Release = WithReleaseNote | WithoutReleaseNote;
 
