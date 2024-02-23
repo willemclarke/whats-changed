@@ -6,7 +6,7 @@ import type { Package } from './fetchTop5kpackages';
 
 function getOwnerAndRepoFromUrl(url: string) {
   const splitUrl = url.split('/');
-  return { owner: splitUrl[3], name: splitUrl[4].split('.')[0] };
+  return { owner: splitUrl[3], name: splitUrl[4] };
 }
 
 async function run() {
@@ -39,7 +39,9 @@ async function run() {
         `
       );
       const insertReleases = db.transaction((releases) => {
-        for (const release of releases) insert.run(release);
+        for (const release of releases) {
+          insert.run(release);
+        }
       });
 
       insertReleases(
