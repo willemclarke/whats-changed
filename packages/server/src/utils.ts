@@ -31,6 +31,20 @@ const releaseNotesSchema = z.array(releaseNoteSchema);
 
 type ReleaseNoteRaw = z.infer<typeof releaseNoteSchema>;
 
+export async function getRepositoryInfo(dependency: Dependency): Promise<Repository> {
+  const res = await fetch(`https://registry.npmjs.org/${dependency.name}`);
+  const data = await res.json();
+
+  const parsed = npmSchema.safeParse(data);
+
+  if (!parsed.success) {
+    throw new Error('Unable to parse into zod schema');
+  }
+
+  const splitUrl = parsed.data.repository.url.split('/');
+  return { owner: splitUrl[3], name: splitUrl[4].split('.')[0], version: dependency.version };
+}
+
 const parseVersion = (version: string) => {
   const coerced = semver.coerce(version);
 
@@ -48,20 +62,6 @@ const getNewerReleases = (currentVersion: string, releases: ReleaseNoteRaw[]) =>
     return isNewer;
   });
 };
-
-export async function getRepositoryInfo(dependency: Dependency): Promise<Repository> {
-  const res = await fetch(`https://registry.npmjs.org/${dependency.name}`);
-  const data = await res.json();
-
-  const parsed = npmSchema.safeParse(data);
-
-  if (!parsed.success) {
-    throw new Error('Unable to parse into zod schema');
-  }
-
-  const splitUrl = parsed.data.repository.url.split('/');
-  return { owner: splitUrl[3], name: splitUrl[4].split('.')[0], version: dependency.version };
-}
 
 export async function getReleaseNotes(repository: Repository): Promise<Release[]> {
   const releases = await githubClient.paginate<ReleaseNoteRaw>(

@@ -4,6 +4,19 @@ import express from 'express';
 import { z } from 'zod';
 import { getReleases } from './utils';
 import { dependencySchema } from '../../common/src/types';
+import { Database } from 'bun:sqlite';
+
+const db = new Database('whats-changed.sqlite');
+
+const make_releases_table = db.run(`
+CREATE TABLE releases (
+  id TEXT NOT NULL,
+  name TEXT NOT NULL,
+  tag_name TEXT NOT NULL,
+  release_url TEXT NOT NULL,
+  created DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+`);
 
 const app = express();
 const port = process.env.PORT ?? 8080;

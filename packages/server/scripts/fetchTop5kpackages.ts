@@ -7,19 +7,6 @@ const packageSchema = z.object({
   name: z.string(),
   version: z.string(),
   description: z.string().optional(),
-  keywords: z.array(z.string()).optional(),
-  publisher: z.object({
-    username: z.string(),
-    email: z.string(),
-  }),
-  maintainers: z
-    .array(
-      z.object({
-        username: z.string(),
-        email: z.string(),
-      })
-    )
-    .optional(),
   links: z.object({
     npm: z.string(),
     homepage: z.string().optional(),
@@ -37,8 +24,8 @@ const url = (offset: number) =>
   `https://registry.npmjs.com/-/v1/search?size=250&popularity=1.0&quality=0.0&maintenance=0.0&text=boost-exact:false&from=${offset}`;
 
 async function getPackages(offset: number): Promise<Package[]> {
-  const packages = await fetch(url(offset));
-  const json = await packages.json();
+  const response = await fetch(url(offset));
+  const json = await response.json();
 
   const parsed = npmResponse.safeParse(json);
 
@@ -53,6 +40,7 @@ async function run() {
   const allPackages: Package[] = [];
 
   for (let i = 0; i < MAX_REQUESTS; i++) {
+    console.log(`Processing ${i} of ${MAX_REQUESTS} requests`);
     const offset = i * PACKAGES_PER_REQUEST;
     const packages = await getPackages(offset);
     allPackages.push(...packages);
