@@ -1,6 +1,6 @@
 import { Database } from 'bun:sqlite';
 
-const PATH = `${__dirname}/../whats-changed.sqlite`;
+const PATH = `${__dirname}/../../whats-changed.sqlite`;
 
 export function getDb() {
   return new Database(PATH);

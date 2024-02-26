@@ -20,7 +20,7 @@ export class GithubClient {
         ...options,
         headers: {
           ...options?.headers,
-          Authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`,
+          Authorization: `Bearer ${Bun.env.GITHUB_ACCESS_TOKEN}`,
         },
       });
 

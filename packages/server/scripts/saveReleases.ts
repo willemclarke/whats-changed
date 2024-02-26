@@ -1,7 +1,7 @@
-import { getAllReleaseNotes } from '@server/utils';
+import { getAllReleaseNotes } from '../src/utils';
 import type { WithReleaseNote } from '../../common/src/types';
 import { async } from '../../common/src/utils';
-import { getDb } from './schema';
+import { getDb } from '../src/database/schema';
 import type { Package } from './fetchTop5kpackages';
 
 function getOwnerAndRepoFromUrl(url: string) {
@@ -14,7 +14,7 @@ async function run() {
   const packagesJSON = await file.text();
   const allPackages = JSON.parse(packagesJSON) as Package[];
 
-  const somePackages = allPackages.slice(0, 4);
+  const somePackages = allPackages.slice(10, 15);
 
   const db = getDb();
 
