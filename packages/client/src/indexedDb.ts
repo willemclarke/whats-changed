@@ -1,6 +1,6 @@
 import { R } from 'common/src';
 import { Release, Releases } from 'common/src/types';
-import { openDB, DBSchema } from 'idb';
+import { openDB, DBSchema, IDBPDatabase } from 'idb';
 import { useQuery } from 'react-query';
 
 const DATABASE_NAME = 'whats-changed';
@@ -13,7 +13,7 @@ interface Db extends DBSchema {
   };
 }
 
-const openDbConnection = () => {
+const openDbConnection = (): Promise<IDBPDatabase<Db>> => {
   return openDB<Db>(DATABASE_NAME, 1, {
     upgrade: (db) => {
       db.createObjectStore(OBJECT_NAME, { autoIncrement: true });
@@ -25,7 +25,7 @@ export const getReleases = async () => {
   const db = await openDbConnection();
   const ungroupedReleases = (await db.getAll(OBJECT_NAME)).flat();
 
-  return R.groupBy(ungroupedReleases, (release) => release.dependencyName);
+  return R.groupBy.strict(ungroupedReleases, (release) => release.dependencyName);
 };
 
 export const useGetReleasesQuery = () => {

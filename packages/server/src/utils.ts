@@ -3,6 +3,7 @@ import { z } from 'zod';
 import type { Dependency, Release, Releases } from '../../common/src/types';
 import { R } from '../../common/src/index';
 import { githubClient } from './github-client';
+import * as P from 'purify-ts';
 
 type Repository = {
   owner: string;
@@ -31,18 +32,42 @@ const releaseNotesSchema = z.array(releaseNoteSchema);
 
 type ReleaseNoteRaw = z.infer<typeof releaseNoteSchema>;
 
-export async function getRepositoryInfo(dependency: Dependency): Promise<Repository> {
-  const res = await fetch(`https://registry.npmjs.org/${dependency.name}`);
-  const data = await res.json();
-
-  const parsed = npmSchema.safeParse(data);
+export function decode<A>(args: { schema: z.ZodSchema<A>; value: unknown }): P.Either<string, A> {
+  const parsed = args.schema.safeParse(args.value);
 
   if (!parsed.success) {
-    throw new Error('Unable to parse into zod schema');
+    return P.Left(parsed.error.message);
   }
 
-  const splitUrl = parsed.data.repository.url.split('/');
-  return { owner: splitUrl[3], name: splitUrl[4].split('.')[0], version: dependency.version };
+  return P.Right(parsed.data);
+}
+
+export async function getRepositoryInfo(
+  dependency: Dependency
+): Promise<P.Either<Error, Repository>> {
+  const request = P.Either.encase(() => fetch(`https://registry.npmjs.org/${dependency.name}`));
+
+  return P.EitherAsync<Error, unknown>(async ({ liftEither }) => {
+    const response = await liftEither(request);
+    return await response.json();
+  }).chain((json) =>
+    P.EitherAsync<Error, Repository>(({ liftEither, throwE }) => {
+      // decode returns Either<string, A>, need to lift into EitherAsync
+      const decoded = decode({ schema: npmSchema, value: json })
+        .map(({ repository }) => {
+          const splitUrl = repository.url.split('/');
+
+          return {
+            owner: splitUrl[3],
+            name: splitUrl[4].split('.')[0],
+            version: dependency.version,
+          };
+        })
+        .mapLeft((err) => throwE(new Error(err)));
+
+      return liftEither(decoded);
+    })
+  );
 }
 
 const parseVersion = (version: string) => {
@@ -145,7 +170,8 @@ export async function getReleaseNotes(repository: Repository): Promise<Release[]
 
 export async function getReleases(dependencies: Dependency[]): Promise<Releases> {
   const repositories = await Promise.all(dependencies.map(getRepositoryInfo));
-  const releases = await Promise.all(repositories.map(getReleaseNotes));
+  const rights = P.Either.rights(repositories);
+  const releases = await Promise.all(rights.map(getReleaseNotes));
   const flattenedReleases = releases.flat();
 
   const groupedReleases = R.groupBy(flattenedReleases, (dep) => dep.dependencyName);

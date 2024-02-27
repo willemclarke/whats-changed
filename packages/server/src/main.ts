@@ -2,7 +2,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
 import { z } from 'zod';
-import { getReleases } from './utils';
+import { decode, getReleases } from './utils';
 import { dependencySchema } from '../../common/src/types';
 import { createDb } from '@server/database/schema';
 
@@ -15,15 +15,12 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/dependencies', async (req, res) => {
-  const unknown = z.array(dependencySchema).safeParse(req.body);
-
-  if (!unknown.success) {
-    return res.json(400).json('Unable to parse provided body');
-  }
-
-  const releases = await getReleases(unknown.data);
-
-  res.status(200).json(releases);
+  decode({ schema: z.array(dependencySchema), value: req.body })
+    .map(async (dependencies) => {
+      const releases = await getReleases(dependencies);
+      return res.status(200).json(releases);
+    })
+    .mapLeft((_) => res.json(400).json('Unable to parse provided body'));
 });
 
 app.listen(port, async () => {
