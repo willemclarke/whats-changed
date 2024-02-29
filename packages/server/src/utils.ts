@@ -25,6 +25,8 @@ const releaseNoteSchema = z.object({
   body: z.string().nullable(),
   created_at: z.string(),
   html_url: z.string(),
+  prerelease: z.boolean(),
+  draft: z.boolean(),
 });
 
 const releaseNotesSchema = z.array(releaseNoteSchema);
@@ -68,10 +70,12 @@ export async function getAllReleaseNotes(repository: Repository): Promise<Releas
     `/repos/${repository.owner}/${repository.name}/releases?per_page=100`,
     releaseNotesSchema
   );
+  // filter out beta & draft releases
+  const filtered = releases.filter((release) => !release.draft && !release.prerelease);
 
   const name = repository.name.toLowerCase();
 
-  if (R.isEmpty(releases)) {
+  if (R.isEmpty(filtered)) {
     return [
       {
         kind: 'withoutReleaseNote',
@@ -80,7 +84,7 @@ export async function getAllReleaseNotes(repository: Repository): Promise<Releas
     ];
   }
 
-  return releases.map((release) => {
+  return filtered.map((release) => {
     return {
       kind: 'withReleaseNote',
       dependencyName: name,
@@ -115,13 +119,14 @@ export async function getReleaseNotes(repository: Repository): Promise<Release[]
       },
     }
   );
+  const filtered = releases.filter((release) => !release.draft && !release.prerelease);
 
   const currentVersion = parseVersion(repository.version);
   const newerReleases = getNewerReleases(currentVersion, releases);
 
   const name = repository.name.toLowerCase();
 
-  if (R.isEmpty(newerReleases)) {
+  if (R.isEmpty(filtered)) {
     return [
       {
         kind: 'withoutReleaseNote',
@@ -130,7 +135,7 @@ export async function getReleaseNotes(repository: Repository): Promise<Release[]
     ];
   }
 
-  return newerReleases.map((release) => {
+  return filtered.map((release) => {
     return {
       kind: 'withReleaseNote',
       dependencyName: name,
