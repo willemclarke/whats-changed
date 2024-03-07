@@ -11,6 +11,7 @@ const withReleaseNote = z.object({
   kind: z.literal('withReleaseNote'),
   dependencyName: z.string(),
   tagName: z.string(),
+  version: z.string(),
   url: z.string(),
   name: z.string().nullable(),
   body: z.string().nullable(),

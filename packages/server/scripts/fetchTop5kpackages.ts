@@ -1,5 +1,10 @@
 import { z } from 'zod';
 
+/*
+  This script will fetch the top 5000 npm packages by popularity
+  and write them to a json file (`./top5kpackages.json`)
+*/
+
 const MAX_REQUESTS = 20;
 const PACKAGES_PER_REQUEST = 250;
 

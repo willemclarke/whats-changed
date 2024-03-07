@@ -47,7 +47,7 @@ export async function getRepositoryInfo(dependency: Dependency): Promise<Reposit
   return { owner: splitUrl[3], name: splitUrl[4].split('.')[0], version: dependency.version };
 }
 
-const parseVersion = (version: string) => {
+function parseVersion(version: string) {
   const coerced = semver.coerce(version);
 
   if (!coerced) {
@@ -55,27 +55,32 @@ const parseVersion = (version: string) => {
   }
 
   return coerced.version;
-};
+}
 
-const getNewerReleases = (currentVersion: string, releases: ReleaseNoteRaw[]) => {
+function getNewerReleases(currentVersion: string, releases: ReleaseNoteRaw[]) {
   return releases.filter((release) => {
     const releaseVersion = parseVersion(release.tag_name);
     const isNewer = semver.compare(releaseVersion, currentVersion) === 1;
     return isNewer;
   });
-};
+}
+
+// taken from chatgpt
+export function versionFromTagName(tagName: string) {
+  const match = tagName.match(/(?:v\.|v)?([\d.]+)/);
+  return match ? match[1] : tagName;
+}
 
 export async function getAllReleaseNotes(repository: Repository): Promise<Release[]> {
   const releases = await githubClient.paginate<ReleaseNoteRaw>(
     `/repos/${repository.owner}/${repository.name}/releases?per_page=100`,
     releaseNotesSchema
   );
-  // filter out beta & draft releases
-  const filtered = releases.filter((release) => !release.draft && !release.prerelease);
+  const filteredReleases = releases.filter((release) => !release.draft && !release.prerelease);
 
   const name = repository.name.toLowerCase();
 
-  if (R.isEmpty(filtered)) {
+  if (R.isEmpty(filteredReleases)) {
     return [
       {
         kind: 'withoutReleaseNote',
@@ -84,12 +89,13 @@ export async function getAllReleaseNotes(repository: Repository): Promise<Releas
     ];
   }
 
-  return filtered.map((release) => {
+  return filteredReleases.map((release) => {
     return {
       kind: 'withReleaseNote',
       dependencyName: name,
       createdAt: release.created_at,
       tagName: release.tag_name,
+      version: versionFromTagName(release.tag_name),
       url: release.html_url,
       body: release.body,
       name: release.name,
@@ -119,14 +125,14 @@ export async function getReleaseNotes(repository: Repository): Promise<Release[]
       },
     }
   );
-  const filtered = releases.filter((release) => !release.draft && !release.prerelease);
+  const filteredReleases = releases.filter((release) => !release.draft && !release.prerelease);
 
   const currentVersion = parseVersion(repository.version);
-  const newerReleases = getNewerReleases(currentVersion, releases);
+  const newerReleases = getNewerReleases(currentVersion, filteredReleases);
 
   const name = repository.name.toLowerCase();
 
-  if (R.isEmpty(filtered)) {
+  if (R.isEmpty(newerReleases)) {
     return [
       {
         kind: 'withoutReleaseNote',
@@ -135,12 +141,13 @@ export async function getReleaseNotes(repository: Repository): Promise<Release[]
     ];
   }
 
-  return filtered.map((release) => {
+  return newerReleases.map((release) => {
     return {
       kind: 'withReleaseNote',
       dependencyName: name,
       createdAt: release.created_at,
       tagName: release.tag_name,
+      version: versionFromTagName(release.tag_name),
       url: release.html_url,
       body: release.body,
       name: release.name,

@@ -16,6 +16,7 @@ export function createDb() {
     id TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     tag_name TEXT NOT NULL,
+    version TEXT NOT NULL,
     release_url TEXT NOT NULL,
     created DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     UNIQUE (name, tag_name)
