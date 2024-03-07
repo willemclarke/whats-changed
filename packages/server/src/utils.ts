@@ -3,6 +3,7 @@ import { z } from 'zod';
 import type { Dependency, Release, Releases } from '../../common/src/types';
 import { R } from '../../common/src/index';
 import { githubClient } from './github-client';
+import * as cache from './cache';
 
 type Repository = {
   owner: string;
@@ -156,6 +157,7 @@ export async function getReleaseNotes(repository: Repository): Promise<Release[]
 }
 
 export async function getReleases(dependencies: Dependency[]): Promise<Releases> {
+  const cacheTest = dependencies.flatMap(cache.lookup);
   const repositories = await Promise.all(dependencies.map(getRepositoryInfo));
   const releases = await Promise.all(repositories.map(getReleaseNotes));
   const flattenedReleases = releases.flat();

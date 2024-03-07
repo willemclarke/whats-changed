@@ -1,6 +1,20 @@
 import { Database } from 'bun:sqlite';
+import { z } from 'zod';
 
 const PATH = `${__dirname}/../../whats-changed.sqlite`;
+
+export const dbReleaseSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  tag_name: z.string(),
+  version: z.string(),
+  release_url: z.string(),
+  created: z.string(),
+});
+
+export const dbReleasesSchema = z.array(dbReleaseSchema);
+
+export type DbRelease = z.infer<typeof dbReleaseSchema>;
 
 export function getDb() {
   return new Database(PATH);
