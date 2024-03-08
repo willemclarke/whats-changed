@@ -22,7 +22,6 @@ app.post('/dependencies', async (req, res) => {
   }
 
   const releases = await getReleases(unknown.data);
-
   res.status(200).json(releases);
 });
 
