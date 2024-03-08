@@ -1,8 +1,9 @@
 import semver from 'semver';
 import { z } from 'zod';
-import type { Dependency, Release, Releases } from '../../common/src/types';
+import type { Dependency, Release, ReleasesMap } from '../../common/src/types';
 import { R } from '../../common/src/index';
 import { githubClient } from './github-client';
+import * as cache from './cache';
 
 type Repository = {
   owner: string;
@@ -155,11 +156,27 @@ export async function getReleaseNotes(repository: Repository): Promise<Release[]
   });
 }
 
-export async function getReleases(dependencies: Dependency[]): Promise<Releases> {
+export async function getReleasesFromGithub(dependencies: Dependency[]) {
   const repositories = await Promise.all(dependencies.map(getRepositoryInfo));
   const releases = await Promise.all(repositories.map(getReleaseNotes));
-  const flattenedReleases = releases.flat();
+  return releases.flat();
+}
 
-  const groupedReleases = R.groupBy(flattenedReleases, (dep) => dep.dependencyName);
+export async function getReleases(dependencies: Dependency[]): Promise<ReleasesMap> {
+  const releasesFromCache = dependencies.flatMap(cache.getReleases);
+  const cacheKeys = new Set(releasesFromCache.map((release) => release.dependencyName));
+
+  const dependenciesNotInCache = R.reject(dependencies, (dep) => cacheKeys.has(dep.name));
+
+  // if all the dependencies were in the cache, short
+  // circuit and send back to client
+  if (R.isEmpty(dependenciesNotInCache)) {
+    return R.groupBy(releasesFromCache, (dep) => dep.dependencyName);
+  }
+
+  const releasesFromGithub = await getReleasesFromGithub(dependenciesNotInCache);
+  const combinedReleases = releasesFromCache.concat(releasesFromGithub);
+  const groupedReleases = R.groupBy(combinedReleases, (release) => release.dependencyName);
+
   return groupedReleases;
 }

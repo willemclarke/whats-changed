@@ -1,5 +1,5 @@
 import { R } from 'common/src';
-import { Release, Releases } from 'common/src/types';
+import { Release, ReleasesMap } from 'common/src/types';
 import { openDB, DBSchema } from 'idb';
 import { useQuery } from 'react-query';
 
@@ -32,7 +32,7 @@ export const useGetReleasesQuery = () => {
   return useQuery({ queryKey: 'releases', queryFn: getReleases });
 };
 
-export const setReleases = async (releases: Releases): Promise<void> => {
+export const setReleases = async (releases: ReleasesMap): Promise<void> => {
   const db = await openDbConnection();
   const transaction = db.transaction(OBJECT_NAME, 'readwrite');
 
