@@ -1,31 +1,35 @@
-import type { Dependency } from '../../common/src/types';
+import type { Dependency, Release } from '../../common/src/types';
 import { dbReleasesSchema, getDb, type DbRelease } from './database/schema';
 
 const db = getDb();
 
-function getReleases(dependency: Dependency): DbRelease[] {
-  const query = db.query('SELECT * FROM releases WHERE name = $name AND version > $version');
-  const execute = query.all({ $name: dependency.name, $version: dependency.version });
-
-  const dbReleases = dbReleasesSchema.safeParse(execute);
-
-  if (!dbReleases.success) {
-    return [];
-  }
-
-  return dbReleases.data;
+function toRelease(release: DbRelease): Release {
+  return {
+    kind: 'withReleaseNote',
+    dependencyName: release.name,
+    name: release.name,
+    tagName: release.tag_name,
+    version: release.version,
+    url: release.release_url,
+    createdAt: release.created,
+    // not currently storing body in DB
+    body: null,
+  };
 }
 
-export function lookup(dependency: Dependency) {
+function getDbReleases(dependency: Dependency): DbRelease[] {
   const query = db.query('SELECT * FROM releases WHERE name = $name AND version > $version');
   const execute = query.all({ $name: dependency.name, $version: dependency.version });
+  const parsedReleases = dbReleasesSchema.safeParse(execute);
 
-  const parsed = dbReleasesSchema.safeParse(execute);
+  return parsedReleases.success ? parsedReleases.data : [];
+}
 
-  if (!parsed.success) {
-    return [];
-  }
+function mapReleases(releases: DbRelease[]): Release[] {
+  return releases.map(toRelease);
+}
 
-  return parsed.data;
-  // const parsed = dbReleasesSchema.safeParse(run);
+export function getReleases(dependency: Dependency): Release[] {
+  const dbReleases = getDbReleases(dependency);
+  return mapReleases(dbReleases);
 }

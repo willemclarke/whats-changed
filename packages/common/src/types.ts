@@ -33,4 +33,4 @@ export type WithoutReleaseNote = z.infer<typeof withoutReleaseNote>;
 
 export type Release = WithReleaseNote | WithoutReleaseNote;
 
-export type Releases = Record<string, Release[]>;
+export type ReleasesMap = Record<string, Release[]>;

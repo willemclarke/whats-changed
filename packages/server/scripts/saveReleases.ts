@@ -20,7 +20,7 @@ async function run() {
   // not zod decoding here as we encoded on write to the json file
   const allPackages = JSON.parse(packagesJSON) as Package[];
 
-  const somePackages = allPackages.slice(0, 10);
+  const somePackages = allPackages.slice(0, 100);
 
   const db = getDb();
 
@@ -54,7 +54,7 @@ async function run() {
         validReleases.map((r) => {
           return {
             $id: crypto.randomUUID(),
-            $name: name,
+            $name: name.toLowerCase(),
             $tag_name: r.tagName,
             $version: r.version,
             $release_url: r.url,

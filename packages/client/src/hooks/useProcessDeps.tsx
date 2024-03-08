@@ -1,4 +1,4 @@
-import { Dependency, Releases, releasesSchema } from 'common/src/types';
+import { Dependency, ReleasesMap, releasesSchema } from 'common/src/types';
 import { useMutation } from 'react-query';
 
 async function sendDependencies(dependencies: Dependency[]) {
@@ -21,5 +21,5 @@ async function sendDependencies(dependencies: Dependency[]) {
 }
 
 export function useProcessDeps() {
-  return useMutation<Releases, Error, Dependency[]>({ mutationFn: sendDependencies });
+  return useMutation<ReleasesMap, Error, Dependency[]>({ mutationFn: sendDependencies });
 }
