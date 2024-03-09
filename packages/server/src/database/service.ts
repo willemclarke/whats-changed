@@ -1,5 +1,5 @@
-import type { Dependency, Release } from '../../common/src/types';
-import { dbReleasesSchema, getDb, type DbRelease } from './database/schema';
+import type { Release, Dependency, WithReleaseNote } from '../../../common/src/types';
+import { getDb, type DbRelease, dbReleasesSchema } from './schema';
 
 const db = getDb();
 
@@ -34,4 +34,33 @@ function mapReleases(releases: DbRelease[]): Release[] {
 export function getReleases(dependency: Dependency): Release[] {
   const dbReleases = getDbReleases(dependency);
   return mapReleases(dbReleases);
+}
+
+export async function insertReleases(releases: Release[]) {
+  const insert = db.prepare(
+    `INSERT INTO releases (id, name, tag_name, version, release_url)
+     VALUES ($id, $name, $tag_name, $version, $release_url)
+     ON CONFLICT (name, tag_name) DO NOTHING
+    `
+  );
+
+  const validReleases = releases.filter(
+    (release) => release.kind === 'withReleaseNote'
+  ) as WithReleaseNote[];
+
+  db.transaction((releases) => {
+    for (const release of releases) {
+      insert.run(release);
+    }
+  })(
+    validReleases.map((release) => {
+      return {
+        $id: crypto.randomUUID(),
+        $name: release.dependencyName.toLowerCase(),
+        $tag_name: release.tagName,
+        $version: release.version,
+        $release_url: release.url,
+      };
+    })
+  );
 }

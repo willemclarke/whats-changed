@@ -20,7 +20,7 @@ export function getDb() {
   return new Database(PATH);
 }
 
-export function createDb() {
+export function init() {
   const db = getDb();
 
   db.exec('PRAGMA journal_mode = WAL;');

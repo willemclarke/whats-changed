@@ -3,13 +3,13 @@ import cors from 'cors';
 import express from 'express';
 import { getReleases } from './utils';
 import { dependencySchema } from '../../common/src/types';
-import { createDb } from '@server/database/schema';
 import { z } from '../../common/src';
+import * as db from './database';
 
 const app = express();
 const port = process.env.PORT ?? 8080;
 
-createDb();
+db.init();
 
 app.use(cors());
 app.use(bodyParser.json());
