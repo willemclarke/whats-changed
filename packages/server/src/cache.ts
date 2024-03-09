@@ -18,7 +18,9 @@ function toRelease(release: DbRelease): Release {
 }
 
 function getDbReleases(dependency: Dependency): DbRelease[] {
-  const query = db.query('SELECT * FROM releases WHERE name = $name AND version > $version');
+  const query = db.query(
+    'SELECT * FROM releases WHERE name = $name AND version > $version ORDER BY version desc'
+  );
   const execute = query.all({ $name: dependency.name, $version: dependency.version });
   const parsedReleases = dbReleasesSchema.safeParse(execute);
 

@@ -72,13 +72,15 @@ export function versionFromTagName(tagName: string) {
   return match ? match[1] : tagName;
 }
 
-export async function getAllReleaseNotes(repository: Repository): Promise<Release[]> {
+export async function getAllReleaseNotes(
+  repository: Omit<Repository, 'version'>
+): Promise<Release[]> {
   const releases = await githubClient.paginate<ReleaseNoteRaw>(
     `/repos/${repository.owner}/${repository.name}/releases?per_page=100`,
     releaseNotesSchema
   );
-  const filteredReleases = releases.filter((release) => !release.draft && !release.prerelease);
 
+  const filteredReleases = releases.filter((release) => !release.draft && !release.prerelease);
   const name = repository.name.toLowerCase();
 
   if (R.isEmpty(filteredReleases)) {
@@ -175,6 +177,10 @@ export async function getReleases(dependencies: Dependency[]): Promise<ReleasesM
   }
 
   const releasesFromGithub = await getReleasesFromGithub(dependenciesNotInCache);
+  console.log({
+    releasesFromCache: releasesFromCache.length,
+    releasesFromGithub: releasesFromGithub.length,
+  });
   const combinedReleases = releasesFromCache.concat(releasesFromGithub);
   const groupedReleases = R.groupBy(combinedReleases, (release) => release.dependencyName);
 

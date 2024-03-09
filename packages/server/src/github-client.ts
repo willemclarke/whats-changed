@@ -24,7 +24,19 @@ export class GithubClient {
         },
       });
 
+      const rateLimitHeader = res.headers.get('x-ratelimit-remaining');
+
+      if (rateLimitHeader === '0') {
+        throw new Error('Rate limit has been met');
+      }
+
       if (!res.ok) {
+        console.log({
+          body: res.body,
+          status: res.status,
+          statusText: res.statusText,
+          headers: res.headers,
+        });
         throw new Error('Error fetching');
       }
 
@@ -48,6 +60,12 @@ export class GithubClient {
     const allData = [] as A[];
 
     const { data, res } = await this.get(url, schema);
+
+    // if one of the npm packages github url is incorrect/moved/renamed
+    // just return an empty array so we can continue looping
+    if (res.status === 301 || res.status === 302) {
+      return [];
+    }
 
     if (!res.ok) {
       return [];
