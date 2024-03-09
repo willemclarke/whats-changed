@@ -8,6 +8,7 @@ type Repository = {
   owner: string;
   name: string;
   version: string;
+  dependencyName: string;
 };
 
 const repositorySchema = z.object({
@@ -33,11 +34,6 @@ const releaseNotesSchema = z.array(releaseNoteSchema);
 
 type ReleaseNoteRaw = z.infer<typeof releaseNoteSchema>;
 
-// TODO: need to adjust to pass down both the dependency.name and splitUrl.name
-// as some dependencies package names differ from the github url: e.g.
-// @radix-ui/react-separator has a github url of
-// https://github.com/radix-ui/primitives
-// this means `primitives` will be the `name` column
 export async function getRepositoryInfo(dependency: Dependency): Promise<Repository> {
   const res = await fetch(`https://registry.npmjs.org/${dependency.name}`);
   const data = await res.json();
@@ -49,7 +45,11 @@ export async function getRepositoryInfo(dependency: Dependency): Promise<Reposit
   }
 
   const splitUrl = parsed.data.repository.url.split('/');
-  return { owner: splitUrl[3], name: splitUrl[4].split('.')[0], version: dependency.version };
+
+  const dependencyName = dependency.name;
+  const githubRepoName = splitUrl[4].split('.')[0];
+
+  return { dependencyName, owner: splitUrl[3], name: githubRepoName, version: dependency.version };
 }
 
 function parseVersion(version: string) {
@@ -100,7 +100,7 @@ export async function getAllReleaseNotes(
   );
 
   const filteredReleases = releases.filter((release) => !release.draft && !release.prerelease);
-  const name = repository.name.toLowerCase();
+  const name = repository.dependencyName.toLowerCase();
 
   if (R.isEmpty(filteredReleases)) {
     return [
@@ -141,7 +141,7 @@ export async function getReleaseNotes(
 
   const filteredReleases = releases.filter((release) => !release.draft && !release.prerelease);
   const currentVersion = parseVersion(repository.version);
-  const name = repository.name.toLowerCase();
+  const name = repository.dependencyName.toLowerCase();
 
   const newerReleases = getNewerReleases(currentVersion, filteredReleases);
   // keeping all found releases so we can write these into our db for caching
@@ -201,11 +201,6 @@ export async function getReleases(dependencies: Dependency[]): Promise<ReleasesM
   }
 
   const { releases, releasesForCache } = await getReleasesFromGithub(dependenciesNotInCache);
-  console.log({
-    inCache: releasesFromCache.length,
-    fetchedReleases: releases.length,
-    releasesForCache: releasesForCache.length,
-  });
   // insert the just fetched releases into cache
   await db.insertReleases(releasesForCache);
 
