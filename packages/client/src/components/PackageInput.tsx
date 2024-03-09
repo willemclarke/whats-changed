@@ -16,13 +16,13 @@ export function PackageInput(props: Props) {
       <VStack spacing={2}>
         <Textarea
           value={input}
-          height={400}
-          width={250}
+          height={500}
+          width={350}
           onChange={onChange}
           placeholder="paste package json here"
         />
         <Button type="submit" isLoading={isLoading} loadingText="Processing dependencies">
-          Submit to find out
+          Submit
         </Button>
       </VStack>
     </form>

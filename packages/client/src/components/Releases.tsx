@@ -29,7 +29,7 @@ export function Releases(props: Props) {
     <>
       {Object.entries(releasesQuery.data).map(([dependency, releases]) => {
         return (
-          <Accordion allowToggle width={500} key={dependency}>
+          <Accordion allowToggle width={700} key={dependency}>
             <AccordionItem>
               <AccordionButton>
                 <Box as="span" flex="1" textAlign="left">
@@ -42,7 +42,7 @@ export function Releases(props: Props) {
                   {releases.map((release) => {
                     if (release.kind === 'withReleaseNote') {
                       return (
-                        <HStack spacing={2} key={release.tagName}>
+                        <HStack spacing={2} key={release.tagName} width="100%">
                           <Tag>{release.tagName}</Tag>
                           <Link href={release.url} target="_blank">
                             {release.url}
