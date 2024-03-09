@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { R } from '../../common/src';
 
 /*
   This script will fetch the top 5000 npm packages by popularity
@@ -38,7 +39,13 @@ async function getPackages(offset: number): Promise<Package[]> {
     return [];
   }
 
-  return parsed.data.objects.map((object) => object.package);
+  // some packages won't have a github repository link, remove them as
+  // we won't be able to fetch any releases for them
+  const packages = parsed.data.objects
+    .map((object) => object.package)
+    .filter((pkg) => R.isDefined(pkg.links.repository));
+
+  return packages;
 }
 
 async function run() {
