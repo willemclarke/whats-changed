@@ -17,21 +17,15 @@ function getOwnerAndRepoFromUrl(url: string) {
 
 async function run() {
   const file = Bun.file('./top5kpackages.json');
-  const packagesJSON = await file.text();
 
   // not zod decoding here as we encoded on write to the json file
+  const packagesJSON = await file.text();
   const allPackages = JSON.parse(packagesJSON) as Package[];
 
-  console.log({
-    allPackages: allPackages.length,
-    isCiIndex: allPackages.findIndex((pkg) => pkg.name === 'is-ci'),
-  });
-
   const db = getDb();
-  const somePackages = R.drop(allPackages, 1381);
 
   async.map(
-    somePackages,
+    allPackages.slice(0, 10),
     async (pkg) => {
       const { owner, name } = getOwnerAndRepoFromUrl(pkg.links.repository ?? '');
 
