@@ -1,33 +1,19 @@
 import React from 'react';
 import { rawDependenciesSchema } from './types';
 import { useProcessDeps } from './hooks/useProcessDeps';
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Link,
-  Spinner,
-  Tag,
-  Text,
-  Textarea,
-  VStack,
-} from '@chakra-ui/react';
+import { Flex, HStack, Text, VStack } from '@chakra-ui/react';
 import { useToast } from './hooks/useToast';
 import { R } from '../../common/src/index';
 import * as indexedDb from './indexedDb';
 import * as utils from './utils';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { LastSearched } from './components/LastSearched';
+import { PackageInput } from './components/PackageInput';
+import { Releases } from './components/Releases';
 
 export function App() {
   const [input, setInput] = React.useState('');
-  const [lastSearched, setLastSearched] = useLocalStorage<string | null>('lasts_searched', null);
+  const [lastSearched, setLastSearched] = useLocalStorage<string | null>('last_searched', null);
 
   const releasesQuery = indexedDb.useGetReleasesQuery();
   const processDepsMutation = useProcessDeps();
@@ -66,13 +52,13 @@ export function App() {
         return;
       }
 
-      setLastSearched(input);
       const dependencies = utils.toDependencies(unknown.data);
 
       return processDepsMutation.mutateAsync(dependencies, {
         onSuccess: async (releases) => {
           await indexedDb.setReleases(releases);
           releasesQuery.refetch();
+          setLastSearched(input);
         },
         onError: (error) => {
           if (error instanceof Error) {
@@ -91,68 +77,19 @@ export function App() {
       <Text my={2} fontSize="2xl" as="b">
         whats-changed
       </Text>
+      <LastSearched lastSearched={lastSearched} onCopyToClipboard={onCopyToClipboard} />
       <Flex width="100%" my={4} justifyContent="center">
         <HStack spacing={2} alignItems="start">
           <VStack spacing={3} h="100%">
-            <LastSearched lastSearched={lastSearched} onCopyToClipboard={onCopyToClipboard} />
-            <form onSubmit={onSubmit}>
-              <VStack spacing={2}>
-                <Textarea
-                  value={input}
-                  height={400}
-                  width={250}
-                  onChange={onChange}
-                  placeholder="paste package json here"
-                />
-                <Button
-                  type="submit"
-                  isLoading={processDepsMutation.isLoading}
-                  loadingText="Processing dependencies"
-                >
-                  Submit to find out
-                </Button>
-              </VStack>
-            </form>
+            <PackageInput
+              input={input}
+              onChange={onChange}
+              onSubmit={onSubmit}
+              isLoading={processDepsMutation.isLoading}
+            />
           </VStack>
           <VStack spacing={2} h="100%">
-            {releasesQuery.isLoading || !releasesQuery.data ? (
-              <Spinner />
-            ) : (
-              Object.entries(releasesQuery.data).map(([dependency, releases]) => {
-                return (
-                  <Accordion allowToggle width={500} key={dependency}>
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton>
-                          <Box as="span" flex="1" textAlign="left">
-                            {dependency}
-                          </Box>
-                          <AccordionIcon />
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4} maxH={300} overflowY="scroll">
-                        <VStack spacing={2}>
-                          {releases.map((release) => {
-                            if (release.kind === 'withReleaseNote') {
-                              return (
-                                <HStack spacing={2} key={release.tagName}>
-                                  <Tag>{release.tagName}</Tag>
-                                  <Link href={release.url} target="_blank">
-                                    {release.url}
-                                  </Link>
-                                </HStack>
-                              );
-                            }
-
-                            return <Text key={release.dependencyName}>Up to date</Text>;
-                          })}
-                        </VStack>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  </Accordion>
-                );
-              })
-            )}
+            <Releases releasesQuery={releasesQuery} />
           </VStack>
         </HStack>
       </Flex>

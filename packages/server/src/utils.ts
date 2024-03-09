@@ -177,10 +177,6 @@ export async function getReleases(dependencies: Dependency[]): Promise<ReleasesM
   }
 
   const releasesFromGithub = await getReleasesFromGithub(dependenciesNotInCache);
-  console.log({
-    releasesFromCache: releasesFromCache.length,
-    releasesFromGithub: releasesFromGithub.length,
-  });
   const combinedReleases = releasesFromCache.concat(releasesFromGithub);
   const groupedReleases = R.groupBy(combinedReleases, (release) => release.dependencyName);
 
