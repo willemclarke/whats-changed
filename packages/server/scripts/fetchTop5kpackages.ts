@@ -1,5 +1,4 @@
-import { z } from 'zod';
-import { R } from '../../common/src';
+import { R, z } from '../../common/src';
 
 /*
   This script will fetch the top 5000 npm packages by popularity

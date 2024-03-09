@@ -1,5 +1,5 @@
 import parseLinkHeader from 'parse-link-header';
-import { z } from 'zod';
+import type { z } from '../../common/src';
 
 type HTTPMethod = 'GET' | 'POST';
 

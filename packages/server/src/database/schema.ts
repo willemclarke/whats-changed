@@ -1,5 +1,5 @@
 import { Database } from 'bun:sqlite';
-import { z } from 'zod';
+import { z } from '../../../common/src';
 
 const PATH = `${__dirname}/../../whats-changed.sqlite`;
 

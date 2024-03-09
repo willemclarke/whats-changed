@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'common/src';
 
 // -- raw is to represent raw package.json dep/devDep keys
 const rawDepsSchema = z.record(z.string());

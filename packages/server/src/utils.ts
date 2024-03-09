@@ -1,7 +1,6 @@
 import semver from 'semver';
-import { z } from 'zod';
 import type { Dependency, Release, ReleasesMap } from '../../common/src/types';
-import { R } from '../../common/src/index';
+import { R, z } from '../../common/src/index';
 import { githubClient } from './github-client';
 import * as cache from './cache';
 

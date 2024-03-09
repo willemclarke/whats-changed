@@ -1,10 +1,10 @@
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
-import { z } from 'zod';
 import { getReleases } from './utils';
 import { dependencySchema } from '../../common/src/types';
 import { createDb } from '@server/database/schema';
+import { z } from '../../common/src';
 
 const app = express();
 const port = process.env.PORT ?? 8080;
