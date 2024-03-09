@@ -1,5 +1,5 @@
 import React from 'react';
-import { rawDependenciesSchema, RawDependencies } from './types';
+import { rawDependenciesSchema } from './types';
 import { useProcessDeps } from './hooks/useProcessDeps';
 import {
   Accordion,
@@ -22,9 +22,12 @@ import { useToast } from './hooks/useToast';
 import { R } from '../../common/src/index';
 import * as indexedDb from './indexedDb';
 import * as utils from './utils';
+import { useLocalStorage } from './hooks/useLocalStorage';
+import { LastSearched } from './components/LastSearched';
 
 export function App() {
   const [input, setInput] = React.useState('');
+  const [lastSearched, setLastSearched] = useLocalStorage<string | null>('lasts_searched', null);
 
   const releasesQuery = indexedDb.useGetReleasesQuery();
   const processDepsMutation = useProcessDeps();
@@ -34,6 +37,12 @@ export function App() {
   const onChange = React.useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
   }, []);
+
+  const onCopyToClipboard = React.useCallback(() => {
+    if (lastSearched) {
+      navigator.clipboard.writeText(lastSearched);
+    }
+  }, [lastSearched]);
 
   const onSubmit = React.useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -57,6 +66,7 @@ export function App() {
         return;
       }
 
+      setLastSearched(input);
       const dependencies = utils.toDependencies(unknown.data);
 
       return processDepsMutation.mutateAsync(dependencies, {
@@ -84,6 +94,7 @@ export function App() {
       <Flex width="100%" my={4} justifyContent="center">
         <HStack spacing={2} alignItems="start">
           <VStack spacing={3} h="100%">
+            <LastSearched lastSearched={lastSearched} onCopyToClipboard={onCopyToClipboard} />
             <form onSubmit={onSubmit}>
               <VStack spacing={2}>
                 <Textarea
