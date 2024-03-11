@@ -3,7 +3,7 @@ import { getDb, type DbRelease, dbReleasesSchema } from './schema';
 
 const db = getDb();
 
-function toRelease(release: DbRelease): Release {
+function toWithReleaseNote(release: DbRelease): WithReleaseNote {
   return {
     kind: 'withReleaseNote',
     dependencyName: release.name,
@@ -17,9 +17,30 @@ function toRelease(release: DbRelease): Release {
   };
 }
 
+function discernReleaseType(release: DbRelease, dependency: Dependency): Release {
+  if (release.version === dependency.version) {
+    return {
+      kind: 'withoutReleaseNote',
+      dependencyName: release.name,
+    };
+  }
+
+  return toWithReleaseNote(release);
+}
+
+function fromDbRelease(releases: DbRelease[], dependency: Dependency): Release[] {
+  if (releases.length === 1) {
+    return releases.map((release) => discernReleaseType(release, dependency));
+  }
+
+  return releases
+    .filter((release) => release.version !== dependency.version)
+    .map((release) => discernReleaseType(release, dependency));
+}
+
 function getDbReleases(dependency: Dependency): DbRelease[] {
   const query = db.query(
-    'SELECT * FROM releases WHERE name = $name AND version > $version ORDER BY version desc'
+    'SELECT * FROM releases WHERE name = $name AND version >= $version ORDER BY version desc'
   );
   const execute = query.all({ $name: dependency.name, $version: dependency.version });
   const parsedReleases = dbReleasesSchema.safeParse(execute);
@@ -27,13 +48,9 @@ function getDbReleases(dependency: Dependency): DbRelease[] {
   return parsedReleases.success ? parsedReleases.data : [];
 }
 
-function mapReleases(releases: DbRelease[]): Release[] {
-  return releases.map(toRelease);
-}
-
 export function getReleases(dependency: Dependency): Release[] {
   const dbReleases = getDbReleases(dependency);
-  return mapReleases(dbReleases);
+  return fromDbRelease(dbReleases, dependency);
 }
 
 export async function insertReleases(releases: Release[]) {

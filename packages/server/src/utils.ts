@@ -191,17 +191,15 @@ export async function getReleasesFromGithub(dependencies: Dependency[]) {
 export async function getReleases(dependencies: Dependency[]): Promise<ReleasesMap> {
   const releasesFromCache = dependencies.flatMap(db.getReleases);
   const cacheKeys = new Set(releasesFromCache.map((release) => release.dependencyName));
-
-  const dependenciesNotInCache = R.reject(dependencies, (dep) => cacheKeys.has(dep.name));
+  const dependenciesNotInCache = dependencies.filter((dep) => !cacheKeys.has(dep.name));
 
   // if all the dependencies were in the cache, short
   // circuit and send back to client
   if (R.isEmpty(dependenciesNotInCache)) {
     return R.groupBy(releasesFromCache, (dep) => dep.dependencyName);
   }
-
   const { releases, releasesForCache } = await getReleasesFromGithub(dependenciesNotInCache);
-  // insert the just fetched releases into cache
+  // insert the just fetched releases into the cache
   await db.insertReleases(releasesForCache);
 
   const combinedReleases = releasesFromCache.concat(releases);
