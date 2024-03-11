@@ -16,7 +16,7 @@ export function PackageInput(props: Props) {
       <VStack spacing={2}>
         <Textarea
           value={input}
-          height={500}
+          height={580}
           width={350}
           onChange={onChange}
           placeholder="paste package json here"

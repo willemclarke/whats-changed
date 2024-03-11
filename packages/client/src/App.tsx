@@ -88,7 +88,7 @@ export function App() {
               isLoading={processDepsMutation.isLoading}
             />
           </VStack>
-          <VStack spacing={2} h="100%">
+          <VStack spacing={2} h={580} overflowY={'scroll'}>
             <Releases releasesQuery={releasesQuery} />
           </VStack>
         </HStack>

@@ -198,6 +198,7 @@ export async function getReleases(dependencies: Dependency[]): Promise<ReleasesM
   if (R.isEmpty(dependenciesNotInCache)) {
     return R.groupBy(releasesFromCache, (dep) => dep.dependencyName);
   }
+
   const { releases, releasesForCache } = await getReleasesFromGithub(dependenciesNotInCache);
   // insert the just fetched releases into the cache
   await db.insertReleases(releasesForCache);

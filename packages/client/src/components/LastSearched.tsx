@@ -26,7 +26,7 @@ export function LastSearched(props: Props) {
       <PopoverTrigger>
         <Button size="xs">Show last searched</Button>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent minWidth={400} w="auto">
         <PopoverArrow />
         <Flex p={2} justifyContent="space-between">
           <Button size="xs" onClick={onCopyToClipboard}>
