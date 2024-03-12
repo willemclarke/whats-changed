@@ -2,14 +2,13 @@
   "name": "server",
   "version": "0.0.0",
   "type": "module",
-  "module": "main.ts",
+  "module": "./src/main.ts",
   "main": "./src/main.ts",
   "scripts": {
     "server:dev": "bun --watch run src/main.ts",
     "start": "bun build --compile --minify --sourcemap src/main.ts --outfile whats-changed"
   },
   "devDependencies": {
-    "common": "workspace:*",
     "@types/body-parser": "^1.19.5",
     "@types/bun": "latest",
     "@types/cors": "^2.8.17",
@@ -18,6 +17,7 @@
     "@types/semver": "^7.5.6"
   },
   "dependencies": {
+    "common": "workspace:*",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
