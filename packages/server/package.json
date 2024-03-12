@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "type": "module",
   "module": "main.ts",
+  "main": "./src/main.ts",
   "scripts": {
     "server:dev": "bun --watch run src/main.ts",
     "start": "bun build --compile --minify --sourcemap src/main.ts --outfile whats-changed"
