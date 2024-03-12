@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for whats-changed-young-morning-7046 on 2024-03-12T21:59:52+11:00
+# fly.toml app configuration file generated for whats-changed on 2024-03-12T22:16:49+11:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'whats-changed-young-morning-7046'
+app = 'whats-changed'
 primary_region = 'syd'
 
 [build]
