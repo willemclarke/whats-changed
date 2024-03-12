@@ -1,5 +1,6 @@
 # Based on https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore
 
+#sqlite
 whats-changed.sqlite
 whats-changed.sqlite-shm
 whats-changed.sqlite-wal

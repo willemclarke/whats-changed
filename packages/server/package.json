@@ -4,7 +4,9 @@
   "type": "module",
   "module": "main.ts",
   "scripts": {
-    "server:dev": "bun --watch run src/main.ts"
+    "server:dev": "bun --watch run src/main.ts",
+    "start": "bun run src/main.ts",
+    "build": "bun build --compile --minify --sourcemap src/main.ts --outfile whats-changed"
   },
   "devDependencies": {
     "common": "workspace:*",
@@ -20,6 +22,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "parse-link-header": "^2.0.0",
+    "path": "^0.12.7",
     "semver": "^7.5.4"
   }
 }

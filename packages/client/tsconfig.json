@@ -13,8 +13,8 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    // "noEmit": true,
     "jsx": "react-jsx",
+    "outDir": "dist",
 
     "baseUrl": ".",
     "paths": {
@@ -22,7 +22,7 @@
     }
   },
 
-  // "include": ["src"],
+  "include": ["./src/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }],
   "types": [
     "bun-types" // add Bun global
