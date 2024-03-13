@@ -1,7 +1,6 @@
 {
   "name": "whats-changed",
   "private": "true",
-  "module": "index.ts",
   "type": "module",
   "workspaces": [
     "packages/client",
@@ -10,5 +9,8 @@
   ],
   "scripts": {
     "clean": "rm -rf node_modules packages/client/node_modules packages/server/node_modules packages/common/node_modules bun.lockb packages/client/bun.lockb packages/server/bun.lockb packages/common/bun.lockb"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "latest"
   }
 }
