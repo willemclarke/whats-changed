@@ -1,8 +1,11 @@
+import { getApiUrl } from '../apiUrl';
 import { Dependency, ReleasesMap, releasesSchema } from 'common/src/types';
 import { useMutation } from 'react-query';
 
 async function sendDependencies(dependencies: Dependency[]) {
-  const response = await fetch('http://localhost:8080/dependencies', {
+  const apiUrl = getApiUrl();
+
+  const response = await fetch(`${apiUrl}/dependencies`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -10,11 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "common": "workspace:*",
     "@chakra-ui/react": "^2.0.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "bun-types": "latest",
+    "common": "workspace:*",
     "framer-motion": "^11.0.3",
     "idb": "^8.0.0",
     "react": "18.2.0",

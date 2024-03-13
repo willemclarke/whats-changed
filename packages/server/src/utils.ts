@@ -183,7 +183,6 @@ function flattenReleases(releases: { releases: Release[]; releasesForCache: Rele
 export async function getReleasesFromGithub(dependencies: Dependency[]) {
   const repositories = await Promise.all(dependencies.map(getRepositoryInfo));
   const releases = await Promise.all(repositories.map(getReleaseNotes));
-  console.log({ releases });
   const flattenedReleases = flattenReleases(releases);
 
   return flattenedReleases;

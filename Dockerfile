@@ -20,13 +20,16 @@ FROM base as build
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
 
-# Install node modules
-COPY --link bun.lockb package.json ./
+# Copy application code
+COPY --link . ./
+
+# install dependencies
 RUN bun install --ci
 
-# Copy application code
-COPY --link . .
 
+# Build client
+WORKDIR /app/packages/client
+RUN bun run build
 
 # Final stage for app image
 FROM base
@@ -34,6 +37,7 @@ FROM base
 # Copy built application
 COPY --from=build /app /app
 
+
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD [ "bun", "main.ts" ]
+CMD [ "bun", "packages/server/src/main.ts" ]
