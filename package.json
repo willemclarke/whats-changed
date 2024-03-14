@@ -8,9 +8,13 @@
     "packages/server"
   ],
   "scripts": {
-    "clean": "rm -rf node_modules packages/client/node_modules packages/server/node_modules packages/common/node_modules bun.lockb packages/client/bun.lockb packages/server/bun.lockb packages/common/bun.lockb"
+    "clean": "rm -rf node_modules packages/client/node_modules packages/server/node_modules packages/common/node_modules bun.lockb packages/client/bun.lockb packages/server/bun.lockb packages/common/bun.lockb",
+    "dev": "concurrently \"cd packages/server && bun server:dev\" \"cd packages/client && bun dev\""
   },
   "devDependencies": {
     "@flydotio/dockerfile": "latest"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
   }
 }
