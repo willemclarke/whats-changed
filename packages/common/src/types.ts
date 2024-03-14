@@ -1,5 +1,8 @@
 import { z } from 'zod';
 
+// poor mans FP result type
+export type Result<A, B> = { kind: 'success'; data: A } | { kind: 'failure'; meta: B };
+
 // what we initially send from front-end to back-end
 export const dependencySchema = z.object({ name: z.string(), version: z.string() });
 
@@ -23,14 +26,23 @@ const withoutReleaseNote = z.object({
   dependencyName: z.string(),
 });
 
-const releaseUnion = z.discriminatedUnion('kind', [withReleaseNote, withoutReleaseNote]);
+const releaseNotFound = z.object({
+  kind: z.literal('packageNotFound'),
+  dependencyName: z.string(),
+});
+
+const releaseUnion = z.discriminatedUnion('kind', [
+  withReleaseNote,
+  withoutReleaseNote,
+  releaseNotFound,
+]);
 
 export const releasesSchema = z.record(z.string(), z.array(releaseUnion));
 
 export type WithReleaseNote = z.infer<typeof withReleaseNote>;
-
 export type WithoutReleaseNote = z.infer<typeof withoutReleaseNote>;
+export type NoFoundReleases = z.infer<typeof releaseNotFound>;
 
-export type Release = WithReleaseNote | WithoutReleaseNote;
+export type Release = WithReleaseNote | WithoutReleaseNote | NoFoundReleases;
 
 export type ReleasesMap = Record<string, Release[]>;

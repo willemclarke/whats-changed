@@ -40,18 +40,24 @@ export function Releases(props: Props) {
               <AccordionPanel pb={4} maxH={300} overflowY="scroll">
                 <VStack spacing={2}>
                   {releases.map((release) => {
-                    if (release.kind === 'withReleaseNote') {
-                      return (
-                        <HStack spacing={2} key={release.tagName} width="100%">
-                          <Tag>{release.tagName}</Tag>
-                          <Link href={release.url} target="_blank">
-                            {release.url}
-                          </Link>
-                        </HStack>
-                      );
+                    switch (release.kind) {
+                      case 'withReleaseNote': {
+                        return (
+                          <HStack spacing={2} key={release.tagName} width="100%">
+                            <Tag>{release.tagName}</Tag>
+                            <Link href={release.url} target="_blank">
+                              {release.url}
+                            </Link>
+                          </HStack>
+                        );
+                      }
+                      case 'packageNotFound': {
+                        return <Text key={release.dependencyName}>Not found</Text>;
+                      }
+                      case 'withoutReleaseNote': {
+                        return <Text key={release.dependencyName}>Up to date</Text>;
+                      }
                     }
-
-                    return <Text key={release.dependencyName}>Up to date</Text>;
                   })}
                 </VStack>
               </AccordionPanel>

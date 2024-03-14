@@ -9,6 +9,7 @@ export class GithubClient {
   public get = this.createMethod('GET');
   public post = this.createMethod('POST');
 
+  // TODO: understand how to handle errors here in a good way
   private createMethod(method: HTTPMethod) {
     return async function <A = unknown>(
       url: string,
@@ -60,12 +61,6 @@ export class GithubClient {
     const allData = [] as A[];
 
     const { data, res } = await this.get(url, schema);
-
-    // if one of the npm packages github url is incorrect/moved/renamed
-    // just return an empty array so we can continue looping
-    if (res.status === 301 || res.status === 302) {
-      return [];
-    }
 
     if (!res.ok) {
       return [];

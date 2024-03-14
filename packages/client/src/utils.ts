@@ -11,7 +11,11 @@ function cleanVersion(version: string) {
   return version;
 }
 
-function isUnsupportedVersion(version: string) {
+function isTypesDependency(name: string): boolean {
+  return name.startsWith('@types/');
+}
+
+function isUnsupportedVersion(version: string): boolean {
   switch (version) {
     case 'latest':
     case 'workspace:*': {
@@ -25,7 +29,8 @@ function isUnsupportedVersion(version: string) {
 
 export function toDependencies(rawDependencies: RawDependencies): Dependency[] {
   return rawDependencies.flatMap(([name, version]) => {
-    if (isUnsupportedVersion(version)) {
+    console.log({ name, check: isTypesDependency(name) });
+    if (isTypesDependency(name) || isUnsupportedVersion(version)) {
       return [];
     }
 
