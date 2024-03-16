@@ -69,7 +69,7 @@ export function App() {
         },
       });
     },
-    [input]
+    [input, errorToast, infoToast]
   );
 
   return (

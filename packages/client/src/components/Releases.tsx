@@ -10,9 +10,26 @@ import {
   Text,
   Tag,
   Link,
-  Box,
 } from '@chakra-ui/react';
 import * as indexedDb from '@client/indexedDb';
+import { R } from 'common/src';
+import { Release } from 'common/src/types';
+
+function dependencyStatus(releases: Release[]) {
+  const head = R.first(releases);
+
+  switch (head?.kind) {
+    case 'withReleaseNote': {
+      return `${releases.length} versions`;
+    }
+    case 'packageNotFound': {
+      return 'Package not found';
+    }
+    case 'withoutReleaseNote': {
+      return 'Up to date';
+    }
+  }
+}
 
 interface Props {
   releasesQuery: ReturnType<typeof indexedDb.useGetReleasesQuery>;
@@ -28,13 +45,16 @@ export function Releases(props: Props) {
   return (
     <>
       {Object.entries(releasesQuery.data).map(([dependency, releases]) => {
+        const status = dependencyStatus(releases);
+
         return (
           <Accordion allowToggle width={700} key={dependency}>
             <AccordionItem>
               <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
-                  {dependency}
-                </Box>
+                <HStack flex="1" textAlign="left" alignItems="center">
+                  <Text>{dependency}</Text>
+                  {status && <Text fontSize="xs">({status})</Text>}
+                </HStack>
                 <AccordionIcon />
               </AccordionButton>
               <AccordionPanel pb={4} maxH={300} overflowY="scroll">

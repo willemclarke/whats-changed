@@ -21,7 +21,6 @@ function isUnsupportedVersion(version: string): boolean {
 
 export function toDependencies(rawDependencies: RawDependencies): Dependency[] {
   return rawDependencies.flatMap(([name, version]) => {
-    console.log({ name, check: isTypesDependency(name) });
     if (isTypesDependency(name) || isUnsupportedVersion(version)) {
       return [];
     }
