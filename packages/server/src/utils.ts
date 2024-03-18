@@ -174,7 +174,9 @@ export async function getReleaseNotes(
     }
   );
 
-  const filteredReleases = releases.filter((release) => !release.draft && !release.prerelease);
+  const filteredReleases = releases.filter(
+    (release) => !release.draft && !release.prerelease && Boolean(semver.valid(release.tag_name))
+  );
   const currentVersion = parseVersion(repository.version);
   const name = repository.dependencyName.toLowerCase();
 
@@ -233,7 +235,7 @@ export async function getReleasesFromGithub(dependencies: Dependency[]): Promise
   // packages
   const notFoundReleases = repositories.flatMap((repo) =>
     repo.kind === 'failure'
-      ? { kind: 'packageNotFound', dependencyName: repo.meta.dependenceName }
+      ? { kind: 'packageNotFound', dependencyName: repo.meta?.dependenceName }
       : []
   ) as NoFoundReleases[];
 
