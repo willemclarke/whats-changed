@@ -23,7 +23,7 @@ function dependencyStatus(releases: Release[]) {
       return `${releases.length} versions`;
     }
     case 'packageNotFound': {
-      return 'Package not found';
+      return 'Package has no releases';
     }
     case 'withoutReleaseNote': {
       return 'Up to date';

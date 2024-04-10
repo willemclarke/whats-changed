@@ -16,7 +16,15 @@ function isTypesDependency(name: string): boolean {
 }
 
 function isUnsupportedVersion(version: string): boolean {
-  return version === 'latest';
+  switch (version) {
+    case 'latest':
+    case 'workspace:*': {
+      return true;
+    }
+    default: {
+      return false;
+    }
+  }
 }
 
 export function toDependencies(rawDependencies: RawDependencies): Dependency[] {
